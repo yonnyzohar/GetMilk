@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".customers.CustomerMain"
+    tools:showIn="@layout/activity_customer_main">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_gravity="left"
+        android:orientation="vertical"
+        android:padding="12dp">
+
+
+        <Button
+            android:id="@+id/order_consultant_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/roundedbutton_blue_single_line"
+            android:paddingBottom="10dp"
+            android:paddingLeft="40dp"
+            android:paddingRight="40dp"
+            android:paddingTop="5dp"
+            android:text="@string/order_consultation"
+            android:textColor="#fff"
+            android:textSize="@dimen/label_size_small"
+            tools:ignore="MissingConstraints" />
+
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/available_consultants_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/roundedbutton_blue_single_line"
+            android:paddingBottom="10dp"
+            android:paddingLeft="40dp"
+            android:paddingRight="40dp"
+            android:paddingTop="5dp"
+            android:text="@string/available_consultants"
+            android:textColor="#fff"
+            android:textSize="@dimen/label_size_small"
+            tools:ignore="MissingConstraints" />
+
+            <TextView
+                android:id="@+id/respondingConsultantsTXT"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true"
+                android:background="@drawable/badge_circle"
+                android:text="10"
+                android:textColor="#FFF"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:layout_alignParentRight="true" />
+
+        </RelativeLayout>
+
+        <Button
+            android:id="@+id/browse_consultants_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/roundedbutton_green_single_line"
+            android:paddingBottom="10dp"
+            android:paddingLeft="40dp"
+            android:paddingRight="40dp"
+            android:paddingTop="5dp"
+            android:text="@string/consultant_index"
+            android:textColor="#fff"
+            android:textSize="@dimen/label_size_small"
+            tools:ignore="MissingConstraints" />
+
+
+
+        <Button
+            android:id="@+id/appointment_history_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/roundedbutton_green_single_line"
+            android:paddingBottom="10dp"
+            android:paddingLeft="40dp"
+            android:paddingRight="40dp"
+            android:paddingTop="5dp"
+            android:text="@string/appointments_history_consultant"
+            android:textColor="#fff"
+            android:textSize="@dimen/label_size_small"
+            tools:ignore="MissingConstraints" />
+
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="30dp"
+            android:background="@color/colorPrimary">
+
+        </View>
+
+
+
+
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>

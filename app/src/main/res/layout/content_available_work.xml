@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.yonnyzohar.getmilk.providers.AvailableWorkActivity"
+    tools:showIn="@layout/activity_available_work">
+
+    <TextView
+        android:id="@+id/no_listings"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/no_listings"
+        tools:ignore="MissingConstraints"
+        android:textSize="@dimen/label_size_huge"
+        />
+
+    <ListView
+        android:layout_width="match_parent"
+        android:id="@+id/avaliable_list_view"
+        android:layout_height="match_parent"></ListView>
+
+</LinearLayout>

@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "663746177293",
+    "firebase_url": "https://testproject-103c6.firebaseio.com",
+    "project_id": "testproject-103c6",
+    "storage_bucket": "testproject-103c6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:663746177293:android:ff69e671fa9dfa25",
+        "android_client_info": {
+          "package_name": "com.yonnyzohar.getmilk"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "663746177293-drpmbo3it5pk456qa9cgv25crrsvn4h4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.yonnyzohar.getmilk",
+            "certificate_hash": "65d1ad886b6fd798c16991cb99930bc74b53dc22"
+          }
+        },
+        {
+          "client_id": "663746177293-ocfroebaahacvbeomfpmlup1mdh44uca.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.yonnyzohar.getmilk",
+            "certificate_hash": "505251ab26bf9d1e870fe19d07b50af69bbcd207"
+          }
+        },
+        {
+          "client_id": "663746177293-d871r2s7mje7vd77034v6ig3up930t71.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBF2JXlt_O6hcAI4LedNWEojm1iI-LOp0I"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "663746177293-d871r2s7mje7vd77034v6ig3up930t71.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

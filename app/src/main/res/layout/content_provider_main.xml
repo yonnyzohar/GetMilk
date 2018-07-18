@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.yonnyzohar.getmilk.providers.ProviderMain"
+    tools:showIn="@layout/activity_provider_main"
+    android:orientation="vertical"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_gravity="left"
+        android:orientation="horizontal"
+        android:padding="12dp">
+
+        <LinearLayout
+            android:layout_width="279dp"
+            android:layout_height="133dp"
+            android:layout_gravity="left"
+            android:orientation="vertical"
+            android:padding="12dp">
+
+
+            <TextView
+
+                android:id="@+id/profile_name"
+                android:layout_width="252dp"
+                android:layout_height="wrap_content"
+                android:text="@string/provider_name"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textSize="@dimen/label_size_huge"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/is_ibclc"
+                android:layout_width="251dp"
+                android:layout_height="wrap_content"
+                android:text="@string/isIbclc"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textSize="17dp" />
+
+            <LinearLayout
+                android:layout_width="193dp"
+                android:layout_height="64dp"
+                android:layout_gravity="right"
+                android:layout_marginRight="-30dp"
+                android:layout_marginTop="-10dp"
+                android:gravity="right"
+                android:orientation="horizontal"
+                android:scaleX=".8"
+                android:scaleY=".8">
+
+                <ImageView
+                    android:id="@+id/star_1"
+                    android:layout_width="60dp"
+                    android:layout_height="54dp"
+                    android:layout_marginRight="-30dp"
+                    android:scaleX=".6"
+                    android:scaleY=".6"
+                    android:src="@drawable/star" />
+
+                <ImageView
+                    android:id="@+id/star_2"
+                    android:layout_width="60dp"
+                    android:layout_height="54dp"
+                    android:layout_marginRight="-30dp"
+                    android:scaleX=".6"
+                    android:scaleY=".6"
+                    android:src="@drawable/star" />
+
+                <ImageView
+                    android:id="@+id/star_3"
+                    android:layout_width="60dp"
+                    android:layout_height="54dp"
+                    android:layout_marginRight="-30dp"
+                    android:scaleX=".6"
+                    android:scaleY=".6"
+                    android:src="@drawable/star" />
+
+                <ImageView
+                    android:id="@+id/star_4"
+                    android:layout_width="60dp"
+                    android:layout_height="54dp"
+                    android:layout_marginRight="-30dp"
+                    android:scaleX=".6"
+                    android:scaleY=".6"
+                    android:src="@drawable/star" />
+
+                <ImageView
+                    android:id="@+id/star_5"
+                    android:layout_width="60dp"
+                    android:layout_height="54dp"
+                    android:scaleX=".6"
+                    android:scaleY=".6"
+                    android:src="@drawable/star" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/profile_image"
+            android:layout_width="89dp"
+            android:layout_height="96dp"
+            android:layout_gravity="right" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="462dp"
+        android:layout_alignParentTop="true"
+        android:layout_gravity="left"
+        android:layout_marginTop="-80dp"
+        android:orientation="vertical"
+        android:padding="12dp">
+
+        <TextView
+            android:layout_width="81dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:text="@string/my_status"
+            android:textAlignment="center"
+            android:textSize="12sp"
+            tools:ignore="MissingConstraints" />
+
+        <Switch
+            android:id="@+id/switch_ent"
+            android:layout_width="59dp"
+            android:layout_height="40dp"
+            android:scaleX="2"
+            android:scaleY="2"
+            android:text="" />
+
+        <TextView
+            android:id="@+id/priceTXT"
+            android:layout_width="81dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:text="@string/price"
+            android:textAlignment="center"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            tools:ignore="MissingConstraints" />
+
+        <TextView
+            android:layout_width="81dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:text="@string/for_a_visit"
+            android:textAlignment="center"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="12sp"
+            tools:ignore="MissingConstraints" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colorPrimary" />
+
+        <ScrollView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_gravity="left"
+                android:orientation="vertical"
+                android:padding="12dp">
+
+
+
+                <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+
+
+                <Button
+                    android:id="@+id/consultations_request_btn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:background="@drawable/roundedbutton_blue_single_line"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="40dp"
+                    android:paddingRight="40dp"
+                    android:paddingTop="5dp"
+                    android:text="@string/consultations_request"
+                    android:textColor="#fff"
+                    android:textSize="@dimen/label_size_small"
+                    tools:ignore="MissingConstraints" />
+
+                    <TextView
+                        android:id="@+id/reqNotifications"
+                        android:layout_width="40dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentTop="true"
+                        android:background="@drawable/badge_circle"
+                        android:text="10"
+                        android:textColor="#FFF"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:layout_alignParentRight="true" />
+
+
+
+                </RelativeLayout>
+
+                <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                <Button
+                    android:id="@+id/interested_mothers_btn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:background="@drawable/roundedbutton_blue_single_line"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="40dp"
+                    android:paddingRight="40dp"
+                    android:paddingTop="5dp"
+                    android:text="@string/intersted_mothers"
+                    android:textColor="#fff"
+                    android:textSize="@dimen/label_size_small"
+                    tools:ignore="MissingConstraints" />
+
+                    <TextView
+                        android:id="@+id/interestedMothersNotifications"
+                        android:layout_width="40dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentTop="true"
+                        android:background="@drawable/badge_circle"
+                        android:text="10"
+                        android:textColor="#FFF"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:layout_alignParentRight="true" />
+
+                </RelativeLayout>
+
+                <Button
+                    android:id="@+id/appointments_history_btn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:background="@drawable/roundedbutton_blue_single_line"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="40dp"
+                    android:paddingRight="40dp"
+                    android:paddingTop="5dp"
+                    android:text="@string/appointment_history"
+                    android:textColor="#fff"
+                    android:textSize="@dimen/label_size_small"
+                    tools:ignore="MissingConstraints" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="30dp"
+                    android:background="@color/colorPrimary">
+
+                </View>
+
+
+                <Button
+                    android:id="@+id/see_reviews_btn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:background="@drawable/roundedbutton_green_single_line"
+                    android:paddingBottom="20dp"
+                    android:paddingLeft="40dp"
+                    android:paddingRight="40dp"
+                    android:paddingTop="20dp"
+                    android:text="@string/my_reviews"
+                    android:textColor="#fff"
+                    android:textSize="@dimen/label_size_small"
+                    tools:ignore="MissingConstraints" />
+
+                <Button
+                    android:id="@+id/edit_details_btn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/roundedbutton_green_single_line"
+                    android:paddingBottom="20dp"
+                    android:paddingLeft="40dp"
+                    android:paddingRight="40dp"
+                    android:paddingTop="20dp"
+                    android:text="@string/edit_details"
+                    android:textColor="#fff"
+                    android:textSize="@dimen/label_size_small"
+                    tools:ignore="MissingConstraints" />
+
+            </LinearLayout>
+        </ScrollView>
+
+
+    </LinearLayout>
+
+</LinearLayout>

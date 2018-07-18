@@ -1,0 +1,107 @@
+<resources>
+
+    <string name="facebook_app_id">2048073435521628</string>
+    <string name="fb_login_protocol_scheme">fb2048073435521628</string>
+
+
+
+    <string name="api_key">AIzaSyBLRGLtDCx3_dYghWgfqjpYRrz-V3zMyb0</string>
+    <string name="app_name">GetMilk</string>
+    <string name="action_settings">Settings</string>
+
+
+    <string name="latitude_label">Latitude</string>
+    <string name="longitude_label">Longitude</string>
+
+    <string name="no_location_detected">No location detected. Make sure location is enabled on the device.</string>
+
+    <string name="permission_rationale">Location permission is needed for core functionality</string>
+    <string name="permission_denied_explanation">Permission was denied, but is needed for core functionality.</string>
+    <string name="settings">Settings</string>
+    <string name="title_activity_order">Map</string>
+
+    <string name="title_activity_provider_map">Map</string>
+
+    <string name="title_activity_order_consultant">הזמנת ייעוץ</string>
+    <string name="title_activity_provider_main">תפריט ראשי - מדריכות הנקה</string>
+    <string name="title_activity_phone_login">GetMilk - phone login</string>
+    <string name="title_activity_verify_phone">אימות טלפון</string>
+    <string name="title_activity_provider_registration">עריכת פרטים</string>
+    <string name="title_activity_cities">בחרי אזורי פעילות</string>
+
+
+    <!--Verify Phone -->
+    <string name="verification_complete">האימות הושלם</string>
+    <string name="verification_failed">האימות נכשל</string>
+    <string name="invalid_number">המספר אינו תקין, נא להזין מספר ללא קידומת מדינה, וללא 0 בהתחלה</string>
+    <string name="verification_sent">האימות נשלח</string>
+
+
+    <!--Main activity-->
+    <string name="consultant">יועצת / מדריכת הנקה</string>
+    <string name="customer">לקוחה</string>
+
+
+    <!--Order consultant-->
+
+    <string name="choose_appointment_day">בחרי יום פגשה</string>
+    <string name="choose_appointment_time">בחרי זמן פגישה</string>
+    <string name="choose_location">בחרי את מיקום הפגישה</string>
+    <string name="tomorrow">מחר</string>
+    <string name="after_tomorrow">מחרתיים</string>
+    <string name="today">היום</string>
+    <string name="order_consultation">הזמיני יועצת</string>
+    <string name="cancel_consultation">בטלי ייעוץ</string>
+
+    <!--Consultant main -->
+    <string name="consultant_index">אינדקס יועצות</string>
+    <string name="available_consultants">יועצות שענו לקריאה שלי</string>
+    <string name="appointments_history_consultant">יועצות שענו לקריאה שלי</string>
+
+    <!--Provider main-->
+
+
+    <string name="my_status">הסטטוס שלי</string>
+    <string name="my_details">הפרטים שלי</string>
+    <string name="price">300</string>
+    <string name="for_a_visit">לביקור</string>
+
+    <string name="consultations_request"><font size="30">בקשות לייעוץ</font>\n\<font size="15">אמהות שפתחו קריאה באזור שלי</font></string>
+
+
+    <string name="intersted_mothers"><font size="30">אמהות שרוצות אותי</font>\n\<font size="15">אמהות שהשיבו בחיוב לפניה שלי</font></string>
+
+    <string name="appointment_history"><font size="30">היסטוריית פגישות</font>\n\<font size="15"> אמהות עימן נפגשתי</font></string>
+
+
+    <string name="my_reviews">ביקורות שכתבו עלי</string>
+    <string name="edit_details">עריכת פרטים אישיים</string>
+
+    <string name="display_name">שם / כינוי</string>
+    <string name="bio">קצת עלי</string>
+    <string name="user_image">תמונת פרופיל</string>
+    <string name="t_c">תנאי שימוש</string>
+    <string name="edit_cities">הערים שלי</string>
+    <string name="price_name">המחיר שלי</string>
+    <string name="ibclc"> מוסמכת ibclc</string>
+    <string name="title_activity_available_work">ייעוצים באזור שלך</string>
+    <string name="title_activity_customer_main">תפריט ראשי - אמהות</string>
+    <string name="appointment_exists">פגישה קיימת</string>
+    <string name="approve_appointment">אשרי פגישה</string>
+    <string name="appointment_exists_details_end">האם לבטל את הפגישה?</string>
+    <string name="title_activity_responding_providers">מדריכות ויועצות שנענו לקריאה שלי</string>
+    <string name="notifying_mother_of_your_interest">הודענו לאם על התעניינותך</string>
+    <string name="provider_name">שם משתמש</string>
+    <string name="isIbclc">מוסמכת או לא</string>
+    <string name="ibclc_certified">ibclc מוסמכת</string>
+    <string name="not_ibclc_certified">מדריכת הנקה</string>
+    <string name="no_listings">אין רשומות</string>
+    <string name="erase_appointment">מחיקת פגישה</string>
+    <string name="title_activity_sign_up">SignUpActivity</string>
+    <string name="title_activity_home">HomeActivity</string>
+    <string name="title_activity_cities_single_choice">CitiesSingleChoice</string>
+    <string name="title_activity_provider_screen_for_customer">ProviderScreenForCustomer</string>
+    <string name="about_me_header">קצת עלי</string>
+
+
+</resources>
