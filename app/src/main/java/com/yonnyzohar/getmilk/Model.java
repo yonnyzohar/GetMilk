@@ -40,6 +40,7 @@ public class Model {
         public static String CUSTOMERS = "customers";
         public static String APPOINTMENTS_IN_PROCESS = "appointmentsInProcess";
         public static String APPOINTMENTS_HISTORY = "appointmentsHistory";
+        public static String REVIEWS = "reviews";
 
     }
 

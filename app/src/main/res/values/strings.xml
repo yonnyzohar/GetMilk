@@ -102,6 +102,8 @@
     <string name="title_activity_cities_single_choice">CitiesSingleChoice</string>
     <string name="title_activity_provider_screen_for_customer">ProviderScreenForCustomer</string>
     <string name="about_me_header">קצת עלי</string>
+    <string name="rating_txt">דירוג</string>
+    <string name="rating_label_txt">דירוג</string>
 
 
 </resources>

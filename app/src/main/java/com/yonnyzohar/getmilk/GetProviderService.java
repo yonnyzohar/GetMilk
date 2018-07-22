@@ -33,6 +33,7 @@ public class GetProviderService extends EventDispatcher{
     private View convertView;
     public Boolean showEditProfileScreen = false;
 
+
     public class ProviderData extends Object{
         public String aboutMe;
         public String name;
@@ -48,25 +49,22 @@ public class GetProviderService extends EventDispatcher{
     public ProviderData dataObj;
 
 
-    public GetProviderService(Context _applicationContext) {
 
+    public GetProviderService() {
+        // Exists only to defeat instantiation.
         super();
-        applicationContext = _applicationContext;
         database = FirebaseDatabase.getInstance();
         dataObj = new ProviderData();
-
     }
 
-    public View getConvertView() {
-        return this.convertView;
-    }
 
-    public void setConvertView(View convertView) {
-        this.convertView = convertView;
-    }
 
-    public void getProviderData(String _providerId)
+    public void getProviderData(String _providerId, Context _applicationContext)
     {
+
+        applicationContext = _applicationContext;
+
+
         dataObj.providerId = _providerId;
         providerNode        = database.getReference("data").child(Model.DBRefs.PROVIDERS).child( _providerId );
         fireBaseMessagingTokenNode = providerNode.child("fireBaseMessagingToken");
@@ -193,5 +191,13 @@ public class GetProviderService extends EventDispatcher{
 
             }
         });
+    }
+
+    public View getConvertView() {
+        return this.convertView;
+    }
+
+    public void setConvertView(View convertView) {
+        this.convertView = convertView;
     }
 }

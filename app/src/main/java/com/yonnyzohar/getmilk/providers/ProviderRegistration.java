@@ -55,7 +55,6 @@ public class ProviderRegistration extends GameActivity
 
 
     ImageView profile_image;
-    GameActivity self;
     private static final int PICK_PHOTO_FOR_AVATAR = 0;
 
     @Override
@@ -78,8 +77,8 @@ public class ProviderRegistration extends GameActivity
         super.onStart();
 
 
-        getProviderService = new GetProviderService(getApplicationContext());
-        getProviderService.getProviderData(Model.userData.uid);
+        getProviderService = new GetProviderService();
+        getProviderService.getProviderData(Model.userData.uid, getApplicationContext());
         getProviderService.addListener("PROVIDER_DATA_RETRIEVED", onProviderDataRetrieved);
 
 

@@ -32,15 +32,14 @@ import com.yonnyzohar.getmilk.eventDispatcher.EventListener;
 
 public class CustomerMain extends GameActivity {
 
-    DatabaseReference fireBaseMessagingTokenNode;
+
 
     Button orderConsultantBTN;
     Button respondingConsultantsBTN;
 
     GetPendingAppointmentService pendingAppointmentService;
     TextView respondingConsultantsTXT;
-    DatabaseReference customerNode;
-    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    GetCustomerService getCustomerService;
 
 
     @Override
@@ -149,74 +148,63 @@ public class CustomerMain extends GameActivity {
 
     private void getInitialValues() {
 
-        customerNode = database.getReference("data").child(Model.DBRefs.CUSTOMERS).child(Model.userData.uid);
-        fireBaseMessagingTokenNode = customerNode.child("fireBaseMessagingToken");
-        customerNode.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                // This method is called once with the initial value and again
-                // whenever data at this location is updated.
-                Object value = dataSnapshot.getValue();
+        getCustomerService = new GetCustomerService(getApplicationContext());
+        getCustomerService.getCustomerData(Model.userData.uid);
+        getCustomerService.addListener("CUSTOMER_RETRIEVED", onCustomerRetrieved);
 
-                if(Boolean.class.isAssignableFrom(value.getClass()))
+
+    }
+
+    private EventListener onCustomerRetrieved = new EventListener() {
+
+        @Override
+        public void onEvent(Event event) {
+            getCustomerService.removeListener("CUSTOMER_RETRIEVED", onCustomerRetrieved);
+
+            if(getCustomerService.customerExists == false)
+            {
+                Map data = new HashMap();
+                data.put("displayName",Model.userData.name);
+                data.put("email",Model.userData.email);
+                data.put("photoURL", Model.userData.photoUrl);
+                data.put("uid", Model.userData.uid);
+
+                if(Model.fireBaseMessagingToken != null)
                 {
-                    Log.d(Model.TAG, "Value is a bool - > set initial values in database");
-
-                    Map data = new HashMap();
-                    data.put("displayName",Model.userData.name);
-                    data.put("email",Model.userData.email);
-                    data.put("photoURL", Model.userData.photoUrl);
-                    data.put("uid", Model.userData.uid);
-
-                    if(Model.fireBaseMessagingToken != null)
-                    {
-                        data.put("fireBaseMessagingToken", Model.fireBaseMessagingToken);
-                    }
+                    data.put("fireBaseMessagingToken", Model.fireBaseMessagingToken);
+                }
 
 
+                if (Model.userData.phoneNumber == null || "".equals(Model.userData.phoneNumber))
+                {
 
-
-                    if (Model.userData.phoneNumber == null || "".equals(Model.userData.phoneNumber))
-                    {
-
-                    }
-                    else
-                    {
-                        data.put("phoneNumber", Model.userData.phoneNumber);
-                    }
-
-
-                    customerNode.setValue(data);
                 }
                 else
                 {
-                    Log.d(Model.TAG, "Value is not a bool, get current location if exists");
-
-                    if(Model.fireBaseMessagingToken != null)
-                    {
-                        fireBaseMessagingTokenNode.setValue(Model.fireBaseMessagingToken);
-                    }
-
-
-                    DataSnapshot residenceNode = dataSnapshot.child("residence");
-                    if(residenceNode.exists())
-                    {
-                        String residence = residenceNode.getValue(String.class);
-                        if(residence != null) {
-                            Model.userData.residence = residence;
-                        }
-                    }
+                    data.put("phoneNumber", Model.userData.phoneNumber);
                 }
 
+                getCustomerService.setCustomerNode(data);
+
+            }
+            else
+            {
+                if(Model.fireBaseMessagingToken != null)
+                {
+                    getCustomerService.setMessagingToken(Model.fireBaseMessagingToken);
+
+                }
+
+
+                if(getCustomerService.residence != null)
+                {
+                    Model.userData.residence = getCustomerService.residence;
+                }
             }
 
-            @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
-                Log.w(Model.TAG, "Failed to read value.", error.toException());
-            }
-        });
-    }
+        }
+
+    };
 
 
 

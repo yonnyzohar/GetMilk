@@ -149,8 +149,8 @@ public class ProviderMain extends GameActivity {
     public void onStart() {
         super.onStart();
 
-        getProviderService = new GetProviderService(getApplicationContext());
-        getProviderService.getProviderData(Model.userData.uid);
+        getProviderService =  new GetProviderService();
+        getProviderService.getProviderData(Model.userData.uid, getApplicationContext());
         getProviderService.addListener("PROVIDER_DATA_RETRIEVED", onProviderDataRetrieved);
 
 
