@@ -8,6 +8,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.yonnyzohar.getmilk.GetProviderService;
 import com.yonnyzohar.getmilk.Model;
 import com.yonnyzohar.getmilk.eventDispatcher.EventDispatcher;
 import com.yonnyzohar.getmilk.eventDispatcher.SimpleEvent;
@@ -22,12 +23,21 @@ public class GetCustomerService  extends EventDispatcher {
     DatabaseReference customerNode;
     DatabaseReference fireBaseMessagingTokenNode;
 
-    public String residence;
-    public String displayName;
-    public String email;
-    public String photoURL;
-    public String uid;
+
     public Boolean customerExists = false;
+
+
+    public class CustomerData extends Object{
+        public String residence;
+        public String displayName;
+        public String email;
+        public String photoURL;
+        public String uid;
+        public String phoneNumber;
+    }
+
+    public GetCustomerService.CustomerData dataObj;
+
 
     public GetCustomerService(Context _applicationContext) {
 
@@ -35,6 +45,7 @@ public class GetCustomerService  extends EventDispatcher {
         applicationContext = _applicationContext;
 
         database = FirebaseDatabase.getInstance();
+        dataObj = new GetCustomerService.CustomerData();
     }
 
     public void getCustomerData(String customerId)
@@ -59,28 +70,34 @@ public class GetCustomerService  extends EventDispatcher {
                     {
                         customerExists = true;
 
+                        DataSnapshot phoneNumberNode = dataSnapshot.child("phoneNumber");
+                        if(phoneNumberNode.exists())
+                        {
+                            dataObj.phoneNumber = phoneNumberNode.getValue(String.class);
+                        }
+
                         DataSnapshot residenceNode = dataSnapshot.child("residence");
                         if(residenceNode.exists())
                         {
-                            residence = residenceNode.getValue(String.class);
+                            dataObj.residence = residenceNode.getValue(String.class);
                         }
 
                         DataSnapshot emailNode = dataSnapshot.child("email");
                         if(residenceNode.exists())
                         {
-                            email = emailNode.getValue(String.class);
+                            dataObj. email = emailNode.getValue(String.class);
                         }
 
                         DataSnapshot displayNameNode = dataSnapshot.child("displayName");
                         if(displayNameNode.exists())
                         {
-                            displayName = displayNameNode.getValue(String.class);
+                            dataObj.displayName = displayNameNode.getValue(String.class);
                         }
 
                         DataSnapshot photoURLNode = dataSnapshot.child("photoURL");
                         if(photoURLNode.exists())
                         {
-                            photoURL = photoURLNode.getValue(String.class);
+                            dataObj.photoURL = photoURLNode.getValue(String.class);
                         }
 
                     }

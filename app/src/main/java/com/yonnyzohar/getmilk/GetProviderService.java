@@ -9,9 +9,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import com.yonnyzohar.getmilk.customers.GetCustomerService;
 import com.yonnyzohar.getmilk.eventDispatcher.EventDispatcher;
 import com.yonnyzohar.getmilk.eventDispatcher.SimpleEvent;
 import android.view.View;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class GetProviderService extends EventDispatcher{
 
@@ -30,12 +34,14 @@ public class GetProviderService extends EventDispatcher{
     public DatabaseReference ibclcNode;
     public DatabaseReference displayNameNode;
     public DatabaseReference numConsultationsNode;
-    public DatabaseReference numFreeLeadsLeft;
+    public DatabaseReference numFreeLeadsLeftNode;
 
 
 
     private View convertView;
     public Boolean showEditProfileScreen = false;
+
+
 
 
     public class ProviderData extends Object{
@@ -46,29 +52,26 @@ public class GetProviderService extends EventDispatcher{
         public double providerRatings = 0;
         public String providerId;
         public Boolean acceptingBids;
-
-
+        public int numFreeLeadsLeft;
     }
 
     public ProviderData dataObj;
 
 
 
-    public GetProviderService() {
+    public GetProviderService( Context _applicationContext) {
+
         // Exists only to defeat instantiation.
         super();
+        applicationContext = _applicationContext;
         database = FirebaseDatabase.getInstance();
         dataObj = new ProviderData();
     }
 
 
 
-    public void getProviderData(String _providerId, Context _applicationContext)
+    public void getProviderData(String _providerId)
     {
-
-        applicationContext = _applicationContext;
-
-
         dataObj.providerId = _providerId;
         providerNode        = database.getReference("data").child(Model.DBRefs.PROVIDERS).child( _providerId );
         fireBaseMessagingTokenNode = providerNode.child("fireBaseMessagingToken");
@@ -81,7 +84,7 @@ public class GetProviderService extends EventDispatcher{
         acceptingBidsNode       = providerNode.child("acceptingBids");
         displayNameNode         = providerNode.child("displayName");
         ibclcNode               = providerNode.child("ibclc");
-        numFreeLeadsLeft        = providerNode.child("numFreeLeadsLeft");
+        numFreeLeadsLeftNode    = providerNode.child("numFreeLeadsLeft");
 
         providerNode.addListenerForSingleValueEvent(new ValueEventListener()
         {
@@ -104,6 +107,13 @@ public class GetProviderService extends EventDispatcher{
                     if(Model.fireBaseMessagingToken != null)
                     {
                         fireBaseMessagingTokenNode.setValue(Model.fireBaseMessagingToken);
+                    }
+
+                    DataSnapshot numFreeLeadsLeft = dataSnapshot.child("numFreeLeadsLeft");
+
+                    if(numFreeLeadsLeft.exists())
+                    {
+                        dataObj.numFreeLeadsLeft = numFreeLeadsLeft.getValue(int.class);
                     }
 
                     DataSnapshot aboutMeNode = dataSnapshot.child("aboutMe");
@@ -196,6 +206,26 @@ public class GetProviderService extends EventDispatcher{
 
             }
         });
+    }
+
+    //redo this in node!!!
+    public void callMade(String providerId, GetCustomerService.CustomerData dataObj, int numFreeLeadsLeft) {
+
+        Map userData = new HashMap();
+        userData.put("uid" , Model.userData.name);
+        userData.put( "displayName", dataObj.displayName);
+        userData.put("phoneNumber", dataObj.phoneNumber);
+
+        Map data = new HashMap();
+        data.put(dataObj.uid , userData);
+
+        providerNode        = database.getReference("data").child(Model.DBRefs.PROVIDERS).child( providerId );
+        DatabaseReference retrievedNumbersNode = providerNode.child("retrievedNumbers");
+        retrievedNumbersNode.updateChildren(data);
+
+        numFreeLeadsLeftNode    = providerNode.child("numFreeLeadsLeft");
+        numFreeLeadsLeftNode.setValue(numFreeLeadsLeft);
+
     }
 
     public View getConvertView() {

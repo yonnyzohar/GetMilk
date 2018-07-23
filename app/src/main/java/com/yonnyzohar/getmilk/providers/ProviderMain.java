@@ -140,8 +140,8 @@ public class ProviderMain extends GameActivity {
     public void onStart() {
         super.onStart();
 
-        getProviderService =  new GetProviderService();
-        getProviderService.getProviderData(Model.userData.uid, getApplicationContext());
+        getProviderService =  new GetProviderService(getApplicationContext());
+        getProviderService.getProviderData(Model.userData.uid );
         getProviderService.addListener("PROVIDER_DATA_RETRIEVED", onProviderDataRetrieved);
 
 
@@ -231,9 +231,6 @@ public class ProviderMain extends GameActivity {
 
             }
 
-
-
-
         }
     };
 
@@ -278,6 +275,7 @@ public class ProviderMain extends GameActivity {
                     @Override
                     public void onClick(View view) {
                         Intent intent = new Intent(getApplicationContext(), InterestedCustmersActivity.class);
+                        intent.putExtra("numFreeLeadsLeft",getProviderService.dataObj.numFreeLeadsLeft);
                         startActivity(intent);
                         return;
                     }

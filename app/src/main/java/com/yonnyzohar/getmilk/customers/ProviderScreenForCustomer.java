@@ -88,11 +88,10 @@ public class ProviderScreenForCustomer extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         if (extras != null)
         {
-
+            price = extras.getInt("price");
             aboutMe = extras.getString("aboutMe");
             name = extras.getString("name");
             isIbclc = extras.getBoolean("isIbclc");
-            price = extras.getInt("price");
             providerRatings = extras.getDouble("providerRatings");
             providerId = extras.getString("providerId");
 

@@ -216,9 +216,9 @@ public class CustomerMain extends GameActivity {
                 }
 
 
-                if(getCustomerService.residence != null)
+                if(getCustomerService.dataObj.residence != null)
                 {
-                    Model.userData.residence = getCustomerService.residence;
+                    Model.userData.residence = getCustomerService.dataObj.residence;
                 }
             }
 

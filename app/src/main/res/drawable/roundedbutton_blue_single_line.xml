@@ -9,4 +9,5 @@ android:shape="rectangle">
     <stroke
         android:width="2dip"
         android:color="@color/colorPrimary" />
+
 </shape>

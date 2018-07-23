@@ -125,9 +125,9 @@ public class RespondingProviders extends AppCompatActivity {
 
             String providerId = pendingAppointmentService.unselectedRespondersArr.get(position);
 
-            GetProviderService getProviderService = new GetProviderService();
+            GetProviderService getProviderService = new GetProviderService(getApplicationContext());
             getProviderService.setConvertView(convertView);
-            getProviderService.getProviderData(providerId, getApplicationContext());
+            getProviderService.getProviderData(providerId );
             getProviderService.addListener("PROVIDER_DATA_RETRIEVED", onProviderDataRetrieved);
 
             return convertView;

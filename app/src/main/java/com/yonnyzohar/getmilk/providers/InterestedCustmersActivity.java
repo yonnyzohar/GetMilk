@@ -1,5 +1,11 @@
 package com.yonnyzohar.getmilk.providers;
+
+import android.Manifest;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -8,12 +14,21 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.yonnyzohar.getmilk.GetProviderService;
+import com.yonnyzohar.getmilk.Methods;
+import com.yonnyzohar.getmilk.Model;
 import com.yonnyzohar.getmilk.R;
+import com.yonnyzohar.getmilk.VerifyPhone;
+import com.yonnyzohar.getmilk.customers.CustomerMain;
+import com.yonnyzohar.getmilk.customers.GetCustomerService;
 import com.yonnyzohar.getmilk.eventDispatcher.Event;
 import com.yonnyzohar.getmilk.eventDispatcher.EventListener;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class InterestedCustmersActivity extends AppCompatActivity {
 
@@ -21,7 +36,11 @@ public class InterestedCustmersActivity extends AppCompatActivity {
     ListView avaliableListView;
     InterestedCustmersActivity.ListItemController listItemController;
     TextView noListings;
-    String  customerId;
+    String customerId;
+    int numFreeLeadsLeft;
+    GetCustomerService getCustomerService;
+    GetProviderService getProviderService;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,24 +56,14 @@ public class InterestedCustmersActivity extends AppCompatActivity {
         noListings.setVisibility(View.VISIBLE);
 
         interestedCustomersService = new InterestedCustomersService(getApplicationContext());
+        getProviderService = new GetProviderService(getApplicationContext());
+
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            numFreeLeadsLeft = extras.getInt("numFreeLeadsLeft");
+        }
 
     }
-
-    private EventListener onInterestedCustomersRetreived = new EventListener() {
-        @Override
-        public void onEvent(Event event) {
-            interestedCustomersService.removeListener("INTERESTED_CUSTOMERS_RETRIEVED", onInterestedCustomersRetreived);
-            if(interestedCustomersService.count == 0)
-            {
-                noListings.setVisibility(View.VISIBLE);
-            }
-            else
-            {
-                noListings.setVisibility(View.GONE);
-            }
-            avaliableListView.setAdapter(listItemController);
-        }
-    };
 
     @Override
     public void onStart() {
@@ -63,11 +72,27 @@ public class InterestedCustmersActivity extends AppCompatActivity {
         interestedCustomersService.getInterestedCustemers();
     }
 
+    private EventListener onInterestedCustomersRetreived = new EventListener() {
+        @Override
+        public void onEvent(Event event) {
+            interestedCustomersService.removeListener("INTERESTED_CUSTOMERS_RETRIEVED", onInterestedCustomersRetreived);
+            if (interestedCustomersService.count == 0) {
+                noListings.setVisibility(View.VISIBLE);
+            } else {
+                noListings.setVisibility(View.GONE);
+            }
+            avaliableListView.setAdapter(listItemController);
+        }
+    };
+
+
     @Override
     public void onStop() {
         super.onStop();
         interestedCustomersService.removeListener("INTERESTED_CUSTOMERS_RETRIEVED", onInterestedCustomersRetreived);
     }
+
+
 
 
 
@@ -132,6 +157,63 @@ public class InterestedCustmersActivity extends AppCompatActivity {
 
     private void onLineClicked(String customerId) {
 
+        getCustomerNumber(customerId);
+
+
     }
+
+    private void getCustomerNumber(String customerId) {
+        getCustomerService = new GetCustomerService(getApplicationContext());
+        getCustomerService.getCustomerData(customerId);
+        getCustomerService.addListener("CUSTOMER_RETRIEVED", onCustomerRetrieved);
+    }
+
+    private EventListener onCustomerRetrieved = new EventListener() {
+
+        @Override
+        public void onEvent(Event event) {
+            getCustomerService.removeListener("CUSTOMER_RETRIEVED", onCustomerRetrieved);
+
+            if(getCustomerService.customerExists == true)
+            {
+                if(numFreeLeadsLeft > 0)
+                {
+                    numFreeLeadsLeft--;
+                    makeCall(getCustomerService.dataObj.phoneNumber);
+                }
+                else
+                {
+                    //pay dialouge
+                }
+
+            }
+            else
+            {
+                //something went wrong, no customer
+            }
+
+        }
+
+    };
+
+    private void makeCall(String phoneNumber) {
+
+        getProviderService.callMade(Model.userData.uid, getCustomerService.dataObj, numFreeLeadsLeft);
+
+        Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + phoneNumber));
+        /*if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }*/
+        startActivity(intent);
+    }
+
+
 
 }

@@ -146,10 +146,13 @@ public class AvailableWorkActivity extends AppCompatActivity {
             dateTXT.setText( dateStr );
             timeTXT.setText( timeStr );
 
+            final View con = convertView;
+
             convertView.setOnClickListener(new View.OnClickListener(){
 
                 @Override
                 public void onClick(View view) {
+                    con.setOnClickListener(null);
                     onProviderBidsForJob(customerId);
                     return;
                 }
