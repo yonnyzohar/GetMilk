@@ -30,6 +30,10 @@ public class GetProviderService extends EventDispatcher{
     public DatabaseReference ibclcNode;
     public DatabaseReference displayNameNode;
     public DatabaseReference numConsultationsNode;
+    public DatabaseReference numFreeLeadsLeft;
+
+
+
     private View convertView;
     public Boolean showEditProfileScreen = false;
 
@@ -77,6 +81,7 @@ public class GetProviderService extends EventDispatcher{
         acceptingBidsNode       = providerNode.child("acceptingBids");
         displayNameNode         = providerNode.child("displayName");
         ibclcNode               = providerNode.child("ibclc");
+        numFreeLeadsLeft        = providerNode.child("numFreeLeadsLeft");
 
         providerNode.addListenerForSingleValueEvent(new ValueEventListener()
         {

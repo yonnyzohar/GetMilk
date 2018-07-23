@@ -48,6 +48,7 @@ public class ProviderRegistration extends GameActivity
     EditText bioTXT;
     EditText displayNameTXT;
     Button edit_cities_btn;
+    Button confirmBTN;
     Switch ibclcEntToggleBTN;
 
     GetProfilePicService getProfilePicService;
@@ -68,33 +69,11 @@ public class ProviderRegistration extends GameActivity
         priceTXT = findViewById(R.id.price);
         bioTXT  = findViewById(R.id.bio);
         edit_cities_btn = findViewById(R.id.edit_cities_btn);
+        confirmBTN = findViewById(R.id.confirm_btn);
         ibclcEntToggleBTN = findViewById(R.id.ibclcEnt);
         profile_image = findViewById(R.id.profile_image);
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
 
 
-        getProviderService = new GetProviderService();
-        getProviderService.getProviderData(Model.userData.uid, getApplicationContext());
-        getProviderService.addListener("PROVIDER_DATA_RETRIEVED", onProviderDataRetrieved);
-
-
-        profile_image.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View v) {
-                getProfilePic();
-            }
-        });
-
-
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
-        if(Model.userData.photoUrl != null)
-        {
-            //profile_image.setImageURI(user.getPhotoUrl());
-        }
 
 
         priceTXT.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -160,14 +139,62 @@ public class ProviderRegistration extends GameActivity
 
             @Override
             public void onClick(View view) {
-                //set the user of type customer
-                //create an entry in the db under the uuid
-                //edit_cities_btn.setOnClickListener(null);
+                updateData();
                 Intent intent = new Intent(getApplicationContext(), CitiesMultipleChoice.class );
                 startActivity(intent);
                 return;
             }
         });
+
+        confirmBTN.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View view) {
+
+                updateData();
+                Intent intent = new Intent(getApplicationContext(), ProviderMain.class );
+                startActivity(intent);
+                return;
+            }
+        });
+
+
+
+    }
+
+    private void updateData() {
+        String bioStr = bioTXT.getText().toString();
+        startListeningForBio = false;
+        setBio(bioStr);
+
+        String amount = priceTXT.getText().toString();
+        startListeningForPrice = false;
+        int myNum = Integer.parseInt(amount);
+        setPrice(myNum);
+
+        String nameStr = displayNameTXT.getText().toString();
+        startListeningForName = false;
+        setName(nameStr);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+
+        getProviderService = new GetProviderService();
+        getProviderService.getProviderData(Model.userData.uid, getApplicationContext());
+        getProviderService.addListener("PROVIDER_DATA_RETRIEVED", onProviderDataRetrieved);
+
+
+        profile_image.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v) {
+                getProfilePic();
+            }
+        });
+
+
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
 
     }

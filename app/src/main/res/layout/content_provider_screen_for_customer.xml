@@ -6,10 +6,12 @@
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".customers.ProviderScreenForCustomer"
-    tools:showIn="@layout/activity_provider_screen_for_customer">
+    tools:showIn="@layout/activity_provider_screen_for_customer"
+    android:nestedScrollingEnabled="true">
 
     <ScrollView
         android:layout_width="match_parent"
+
         android:layout_height="wrap_content">
 
         <LinearLayout
@@ -201,7 +203,7 @@
             <ListView
                 android:layout_width="match_parent"
                 android:id="@+id/provider_reviews"
-                android:layout_height="match_parent"></ListView>
+                android:layout_height="wrap_content"></ListView>
 
             <com.facebook.login.widget.LoginButton
                 android:id="@+id/login_button"
@@ -222,9 +224,10 @@
 
             <Button
                 android:textColor="#fff"
+                android:layout_marginBottom="10sp"
                 android:layout_gravity="center"
                 android:textSize="@dimen/label_size_small"
-                android:id="@+id/oder_consultant_btn"
+                android:id="@+id/order_consultant_btn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/roundedbutton_green_single_line"

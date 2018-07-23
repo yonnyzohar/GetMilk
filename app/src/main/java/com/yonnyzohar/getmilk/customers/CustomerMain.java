@@ -25,8 +25,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.yonnyzohar.getmilk.GameActivity;
+import com.yonnyzohar.getmilk.HomeActivity;
+import com.yonnyzohar.getmilk.Methods;
 import com.yonnyzohar.getmilk.Model;
 import com.yonnyzohar.getmilk.R;
+import com.yonnyzohar.getmilk.VerifyPhone;
 import com.yonnyzohar.getmilk.eventDispatcher.Event;
 import com.yonnyzohar.getmilk.eventDispatcher.EventListener;
 
@@ -177,7 +180,24 @@ public class CustomerMain extends GameActivity {
 
                 if (Model.userData.phoneNumber == null || "".equals(Model.userData.phoneNumber))
                 {
+                    Boolean launchPhoneActivity = false;
 
+                    if(Methods.isEmulator())
+                    {
+                        launchPhoneActivity = false;
+                    }
+                    else
+                    {
+                        launchPhoneActivity = true;
+                    }
+
+                    if ( launchPhoneActivity  )
+                    {
+                        Intent intent = new Intent(CustomerMain.this, VerifyPhone.class);
+                        startActivity(intent);
+                        finish();
+                        return;
+                    }
                 }
                 else
                 {

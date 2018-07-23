@@ -1,6 +1,9 @@
 package com.yonnyzohar.getmilk;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -16,6 +19,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Set;
 
 import com.yonnyzohar.getmilk.customers.CustomerMain;
@@ -60,10 +65,12 @@ public class HomeActivity extends AppCompatActivity {
                 public void onClick(View view) {
                     //set the user of type customer
                     //create an entry in the db under the uuid
-                    customerBTN.setOnClickListener(null);
+
                     Model.userType = Model.DBRefs.CUSTOMERS;
 
-                    createDBEntryForUserIfNonExitent();
+                    showAlert();
+
+
                     return;
                 }
             });
@@ -74,8 +81,8 @@ public class HomeActivity extends AppCompatActivity {
                 public void onClick(View view) {
                     Log.d(Model.TAG, "CONSTULTANT CLICKED");
                     Model.userType = Model.DBRefs.PROVIDERS;
-                    consultantBTN.setOnClickListener(null);
-                    createDBEntryForUserIfNonExitent();
+                    showAlert();
+
                     return;
                 }
             });
@@ -90,8 +97,43 @@ public class HomeActivity extends AppCompatActivity {
 
     }
 
+    private void showAlert() {
+        AlertDialog.Builder builder;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            builder = new AlertDialog.Builder(this, android.R.style.Theme_Material_Dialog_Alert);
+        } else {
+            builder = new AlertDialog.Builder(this);
+        }
+        builder.setTitle(R.string.approve_choice);
+
+        if(Model.userType == Model.DBRefs.CUSTOMERS)
+        {
+            builder.setMessage(R.string.user_is_customer);
+        }
+        else
+        {
+            builder.setMessage(R.string.user_is_consultant);
+        }
+
+        builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                consultantBTN.setOnClickListener(null);
+                customerBTN.setOnClickListener(null);
+                createDBEntryForUserIfNonExitent();
+            }
+        });
+        builder.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                // do nothing
+            }
+        });
+        builder.setIcon(android.R.drawable.ic_dialog_alert);
+        builder.show();
+    }
+
     private void createDBEntryForUserIfNonExitent() {
 
+        mAuth = FirebaseAuth.getInstance();
         currUser = mAuth.getCurrentUser();
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();

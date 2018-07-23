@@ -45,6 +45,8 @@ public class ProviderMain extends GameActivity {
     GetProviderService getProviderService;
     GetProfilePicService getProfilePicService;
 
+    InterestedCustomersService interestedCustomersService;
+
     int[] starsArr;
 
 
@@ -114,18 +116,7 @@ public class ProviderMain extends GameActivity {
 
         reqNotifications        = findViewById(R.id.reqNotifications);
         availableWorkBTN        = findViewById(R.id.consultations_request_btn);
-        availableWorkBTN.setOnClickListener(new View.OnClickListener(){
 
-            @Override
-            public void onClick(View view) {
-                //set the user of type customer
-                //create an entry in the db under the uuid
-                //edit_cities_btn.setOnClickListener(null);
-                Intent intent = new Intent(getApplicationContext(), AvailableWorkActivity.class);
-                startActivity(intent);
-                return;
-            }
-        });
 
 
         availabilityToggleBTN   = findViewById(R.id.switch_ent);
@@ -232,6 +223,12 @@ public class ProviderMain extends GameActivity {
                 avaliableWorkService = new GetAvaliableWorkService(getApplicationContext());
                 avaliableWorkService.addListener("AVALIABLE_WORK_RETREIVED", onAvaliableWorkRetreived);
                 avaliableWorkService.getAvaliableWork();
+
+
+                interestedCustomersService = new InterestedCustomersService(getApplicationContext());
+                interestedCustomersService.addListener("INTERESTED_CUSTOMERS_RETRIEVED", onInterestedCustomersRetreived);
+                interestedCustomersService.getInterestedCustemers();
+
             }
 
 
@@ -239,6 +236,8 @@ public class ProviderMain extends GameActivity {
 
         }
     };
+
+
 
     private EventListener onProfilePicRetreived = new EventListener() {
         @Override
@@ -253,9 +252,39 @@ public class ProviderMain extends GameActivity {
     @Override
     public void onStop() {
         super.onStop();
-        avaliableWorkService.removeListener("AVALIABLE_WORK_RETREIVED", onAvaliableWorkRetreived);
-        avaliableWorkService = null;
+        if(avaliableWorkService != null )
+        {
+            avaliableWorkService.removeListener("AVALIABLE_WORK_RETREIVED", onAvaliableWorkRetreived);
+            avaliableWorkService = null;
+        }
+
     }
+
+    private EventListener onInterestedCustomersRetreived = new EventListener() {
+        @Override
+        public void onEvent(Event event) {
+            interestedCustomersService.removeListener("INTERESTED_CUSTOMERS_RETRIEVED", onInterestedCustomersRetreived);
+            if(interestedCustomersService.count == 0)
+            {
+                interestedMothersNotifications.setVisibility(View.INVISIBLE);
+                interestedMothersBTN.setOnClickListener(null);
+            }
+            else
+            {
+                interestedMothersNotifications.setVisibility(View.VISIBLE);
+                interestedMothersNotifications.setText(Integer.toString(interestedCustomersService.count));
+                interestedMothersBTN.setOnClickListener(new View.OnClickListener(){
+
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(getApplicationContext(), InterestedCustmersActivity.class);
+                        startActivity(intent);
+                        return;
+                    }
+                });
+            }
+        }
+    };
 
     private EventListener onAvaliableWorkRetreived = new EventListener() {
         @Override
@@ -264,12 +293,22 @@ public class ProviderMain extends GameActivity {
             if(avaliableWorkService.count == 0)
             {
                 reqNotifications.setVisibility(View.INVISIBLE);
+                availableWorkBTN.setOnClickListener(null);
 
             }
             else
             {
                 reqNotifications.setVisibility(View.VISIBLE);
                 reqNotifications.setText(Integer.toString(avaliableWorkService.count));
+                availableWorkBTN.setOnClickListener(new View.OnClickListener(){
+
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(getApplicationContext(), AvailableWorkActivity.class);
+                        startActivity(intent);
+                        return;
+                    }
+                });
             }
 
         }

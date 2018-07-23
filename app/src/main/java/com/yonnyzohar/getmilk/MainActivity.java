@@ -33,6 +33,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 
+
+//buy this:
+//https://www.shutterstock.com/image-vector/milk-labels-vector-set-splash-blot-781454341?src=zmBWrzjcaUdfeYP7VXXqbA-1-14&drawer=open
+//android:background="@drawable/baby_face_24dp"
 public class MainActivity extends GameActivity{
 
 

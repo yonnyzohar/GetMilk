@@ -7,6 +7,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -14,7 +15,14 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 
 import java.util.Arrays;
@@ -56,12 +64,13 @@ public class ProviderScreenForCustomer extends AppCompatActivity {
     LoginButton loginButton;
     CallbackManager callbackManager;
     ProviderReviewsService providerReviewsService;
+    Button orderConsultantBTN;
 
 
     int starsArr[];
 
 
-    ListView prviderReviewsView;
+    ListView providerReviewsView;
     ProviderScreenForCustomer.ListItemController listItemController;
 
 
@@ -72,11 +81,8 @@ public class ProviderScreenForCustomer extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        prviderReviewsView = findViewById(R.id.provider_reviews);
+        providerReviewsView = findViewById(R.id.provider_reviews);
         listItemController = new ProviderScreenForCustomer.ListItemController();
-
-
-
         callbackManager = CallbackManager.Factory.create();
 
         Bundle extras = getIntent().getExtras();
@@ -165,10 +171,70 @@ public class ProviderScreenForCustomer extends AppCompatActivity {
 
             if(providerReviewsService.numReviews != 0)
             {
-                prviderReviewsView.setAdapter(listItemController);
+                providerReviewsView.setAdapter(listItemController);
+                providerReviewsView.setOnTouchListener(new ListView.OnTouchListener() {
+                    @Override
+                    public boolean onTouch(View v, MotionEvent event) {
+                        int action = event.getAction();
+                        switch (action) {
+                            case MotionEvent.ACTION_DOWN:
+                                // Disallow ScrollView to intercept touch events.
+                                v.getParent().requestDisallowInterceptTouchEvent(true);
+                                break;
+
+                            case MotionEvent.ACTION_UP:
+                                // Allow ScrollView to intercept touch events.
+                                v.getParent().requestDisallowInterceptTouchEvent(false);
+                                break;
+                        }
+
+                        // Handle ListView touch events.
+                        v.onTouchEvent(event);
+                        return true;
+                    }
+                });
+
+                orderConsultantBTN = findViewById(R.id.order_consultant_btn);
+                orderConsultantBTN.setOnClickListener(new View.OnClickListener(){
+                    @Override
+                    public void onClick(View view) {
+                        orderConsultantBTN.setOnClickListener(null);
+                        onProviderSelected(providerId, Model.userData.uid);
+                        return;
+                    }
+                });
+
             }
         }
     };
+
+    private void onProviderSelected(String providerId, String customerId) {
+        RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
+        String url ="https://us-central1-testproject-103c6.cloudfunctions.net/onCustomerWantsProvider?providerId="+providerId+"&customerId="+customerId;
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        // Display the first 500 characters of the response string.
+                        Log.d(Model.TAG, response);
+
+                        String str = getResources().getString(R.string.notifying_provider_of_your_interest);
+                        Toast.makeText(getApplicationContext(), str, Toast.LENGTH_SHORT).show();
+
+                        Intent intent = new Intent(getApplicationContext(), RespondingProviders.class);
+                        startActivity(intent);
+                        return;
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d(Model.TAG,"That didn't work!");
+            }
+        });
+
+        queue.add(stringRequest);
+    }
 
     class ListItemController extends BaseAdapter {
 
@@ -195,33 +261,24 @@ public class ProviderScreenForCustomer extends AppCompatActivity {
             ReviewerData obj = providerReviewsService.reviewsArr.get(position);
 
 
-                String customerId = obj.customerId;
-                String reviewerName = obj.reviewerName;
-                String date = obj.date;
-                String desc = obj.desc;
-                int rating = obj.rating;
+            String customerId = obj.getCustomerId();
+            String reviewerName = obj.getReviewerName();
+            String date = obj.getDate();
+            String desc = obj.getDesc();
+            int rating = obj.getRating();
 
 
-                TextView nameTXT = convertView.findViewById(R.id.nameTXT);
-                TextView review_date = convertView.findViewById(R.id.review_date);
-                TextView review_txt = convertView.findViewById(R.id.review_txt);
-                TextView rating_txt = convertView.findViewById(R.id.rating_txt);
+            TextView nameTXT = convertView.findViewById(R.id.nameTXT);
+            TextView review_date = convertView.findViewById(R.id.review_date);
+            TextView review_txt = convertView.findViewById(R.id.review_txt);
+            TextView rating_txt = convertView.findViewById(R.id.rating_txt);
 
-                nameTXT.setText( reviewerName );
-                review_date.setText( date );
-                review_txt.setText( desc );
-                rating_txt.setText( Integer.toString(rating) );
+            nameTXT.setText( reviewerName );
+            review_date.setText( date );
+            review_txt.setText( desc );
+            rating_txt.setText( Integer.toString(rating) );
 
 
-
-            /*convertView.setOnClickListener(new View.OnClickListener(){
-
-                @Override
-                public void onClick(View view) {
-                    onProviderBidsForJob(customerId);
-                    return;
-                }
-            });*/
 
             return convertView;
         }
