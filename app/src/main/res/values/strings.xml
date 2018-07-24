@@ -55,7 +55,7 @@
     <!--Consultant main -->
     <string name="consultant_index">אינדקס יועצות</string>
     <string name="available_consultants">יועצות שענו לקריאה שלי</string>
-    <string name="appointments_history_consultant">יועצות שענו לקריאה שלי</string>
+    <string name="appointments_history_consultant">היסטורית ייעוצים</string>
 
     <!--Provider main-->
 
@@ -112,6 +112,9 @@
     <string name="confirm">אישור</string>
     <string name="title_activity_contacts">ספר טלפונים</string>
     <string name="press_appointment">בחרי פגישה כדי להציע את עצמך</string>
+    <string name="appointment_approved">האם הפגישה מתקיימת?</string>
+    <string name="add_to_calendar">האם להוסיף ליומן?</string>
+    <string name="title_activity_customer_history">יועצות שדיברתי איתן</string>
 
 
 </resources>

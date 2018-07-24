@@ -6,6 +6,8 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.READ_CALENDAR" />
+    <uses-permission android:name="android.permission.WRITE_CALENDAR" />
 
     <application
         android:allowBackup="true"
@@ -133,6 +135,10 @@
         <activity
             android:name=".providers.ContactsActivity"
             android:label="@string/title_activity_contacts"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".customers.CustomerHistoryActivity"
+            android:label="@string/title_activity_customer_history"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

@@ -2,6 +2,7 @@ package com.yonnyzohar.getmilk.providers;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.CalendarContract;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
@@ -23,6 +24,8 @@ import com.yonnyzohar.getmilk.R;
 import com.yonnyzohar.getmilk.eventDispatcher.Event;
 import com.yonnyzohar.getmilk.eventDispatcher.EventListener;
 import com.yonnyzohar.getmilk.services.InterestedCustomersService;
+
+import java.util.Calendar;
 
 //if provider has finished signup- send to
 public class ProviderMain extends GameActivity {
@@ -133,6 +136,8 @@ public class ProviderMain extends GameActivity {
         getProviderService =  new GetProviderService(getApplicationContext());
         getProviderService.getProviderData(Model.userData.uid );
         getProviderService.addListener("PROVIDER_DATA_RETRIEVED", onProviderDataRetrieved);
+
+
 
 
 
@@ -318,6 +323,8 @@ public class ProviderMain extends GameActivity {
         availableWorkBTN.setVisibility(View.VISIBLE);
         availabilityToggleBTN.setVisibility(View.VISIBLE);
     }
+
+
 
 
 

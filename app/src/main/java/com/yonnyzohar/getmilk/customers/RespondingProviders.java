@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
+import com.yonnyzohar.getmilk.data.Model;
 import com.yonnyzohar.getmilk.services.GetPendingAppointmentService;
 import com.yonnyzohar.getmilk.services.GetProviderService;
 import com.yonnyzohar.getmilk.R;
@@ -49,7 +50,7 @@ public class RespondingProviders extends AppCompatActivity {
     public void onStart() {
         super.onStart();
         pendingAppointmentService = new GetPendingAppointmentService(getApplicationContext());
-        pendingAppointmentService.getPendingAppointment();
+        pendingAppointmentService.getPendingAppointment(Model.userData.uid);
         pendingAppointmentService.addListener("PENDING_APPOINTMENT_RETRIEVED", onPendingAppointmentRetrieved);
 
     }

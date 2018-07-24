@@ -211,6 +211,23 @@ public class ProviderRegistration extends GameActivity
                 }
             });
 
+            if (Model.userData.phoneNumber == null || "".equals(Model.userData.phoneNumber))
+            {
+
+            }
+            else
+            {
+                if(dataObj.phoneNumber == null)
+                {
+                    getProviderService.phoneNumberNode.setValue(Model.userData.phoneNumber);
+                }
+            }
+
+            if(Model.fireBaseMessagingToken != null)
+            {
+                getProviderService.fireBaseMessagingTokenNode.setValue(Model.fireBaseMessagingToken);
+            }
+
 
 
             if(dataObj.name == null)

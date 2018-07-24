@@ -66,6 +66,22 @@
 
         </RelativeLayout>
 
+
+        <Button
+            android:id="@+id/appointment_history_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/roundedbutton_green_single_line"
+            android:paddingBottom="10dp"
+            android:paddingLeft="40dp"
+            android:paddingRight="40dp"
+            android:paddingTop="5dp"
+            android:text="@string/appointments_history_consultant"
+            android:textColor="#fff"
+            android:textSize="@dimen/label_size_small"
+            tools:ignore="MissingConstraints" />
+
         <Button
             android:id="@+id/browse_consultants_btn"
             android:layout_width="match_parent"
@@ -83,20 +99,7 @@
 
 
 
-        <Button
-            android:id="@+id/appointment_history_btn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:background="@drawable/roundedbutton_green_single_line"
-            android:paddingBottom="10dp"
-            android:paddingLeft="40dp"
-            android:paddingRight="40dp"
-            android:paddingTop="5dp"
-            android:text="@string/appointments_history_consultant"
-            android:textColor="#fff"
-            android:textSize="@dimen/label_size_small"
-            tools:ignore="MissingConstraints" />
+
 
 
 

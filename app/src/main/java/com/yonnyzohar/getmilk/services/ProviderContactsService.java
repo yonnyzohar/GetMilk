@@ -42,12 +42,7 @@ public class ProviderContactsService extends EventDispatcher{
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
 
-
-
                 if(dataSnapshot.exists()) {
-
-
-
 
                     //children should be an array
                     for(DataSnapshot child : dataSnapshot.getChildren() ){

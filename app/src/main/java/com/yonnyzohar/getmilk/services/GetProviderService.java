@@ -42,6 +42,7 @@ public class GetProviderService extends EventDispatcher{
     public DatabaseReference displayNameNode;
     public DatabaseReference numConsultationsNode;
     public DatabaseReference numFreeLeadsLeftNode;
+    public DatabaseReference phoneNumberNode;
 
     public List<ReviewerData> contactsArr;
 
@@ -62,6 +63,7 @@ public class GetProviderService extends EventDispatcher{
         public String providerId;
         public Boolean acceptingBids;
         public int numFreeLeadsLeft;
+        public String phoneNumber;
     }
 
     public ProviderData dataObj;
@@ -94,6 +96,7 @@ public class GetProviderService extends EventDispatcher{
         displayNameNode         = providerNode.child("displayName");
         ibclcNode               = providerNode.child("ibclc");
         numFreeLeadsLeftNode    = providerNode.child("numFreeLeadsLeft");
+        phoneNumberNode         = providerNode.child("phoneNumber");
 
         providerNode.addListenerForSingleValueEvent(new ValueEventListener()
         {
@@ -113,9 +116,11 @@ public class GetProviderService extends EventDispatcher{
                 }
                 else{
 
-                    if(Model.fireBaseMessagingToken != null)
+                    DataSnapshot phoneNumber = dataSnapshot.child("phoneNumber");
+
+                    if(phoneNumber.exists())
                     {
-                        fireBaseMessagingTokenNode.setValue(Model.fireBaseMessagingToken);
+                        dataObj.phoneNumber = phoneNumber.getValue(String.class);
                     }
 
                     DataSnapshot numFreeLeadsLeft = dataSnapshot.child("numFreeLeadsLeft");

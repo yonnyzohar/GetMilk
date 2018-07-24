@@ -1,11 +1,10 @@
-package com.yonnyzohar.getmilk.providers;
+package com.yonnyzohar.getmilk.customers;
 
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.CalendarContract;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
@@ -15,9 +14,9 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -25,75 +24,75 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
 import com.yonnyzohar.getmilk.R;
-import com.yonnyzohar.getmilk.data.ContactData;
+import com.yonnyzohar.getmilk.data.HistoryData;
 import com.yonnyzohar.getmilk.data.Model;
 import com.yonnyzohar.getmilk.eventDispatcher.Event;
 import com.yonnyzohar.getmilk.eventDispatcher.EventListener;
-import com.yonnyzohar.getmilk.services.GetAvaliableWorkService;
-import com.yonnyzohar.getmilk.services.ProviderContactsService;
+import com.yonnyzohar.getmilk.providers.InterestedCustmersActivity;
+import com.yonnyzohar.getmilk.services.GetCustomerService;
+import com.yonnyzohar.getmilk.services.GetProviderService;
+import com.yonnyzohar.getmilk.services.InterestedCustomersService;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.Calendar;
+public class CustomerHistoryActivity extends AppCompatActivity {
 
-public class ContactsActivity extends AppCompatActivity {
-
+    ListView avaliableListView;
+    CustomerHistoryActivity.ListItemController listItemController;
     TextView noListings;
 
+    GetCustomerService getCustomerService;
 
-    ProviderContactsService providerContactsService;
-    ListView avaliableListView;
-    ContactsActivity.ListItemController listItemController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_contacts);
+        setContentView(R.layout.activity_customer_history);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         avaliableListView = findViewById(R.id.avaliable_list_view);
-        listItemController = new ContactsActivity.ListItemController();
+        listItemController = new CustomerHistoryActivity.ListItemController();
 
         noListings = findViewById(R.id.no_listings);
         noListings.setVisibility(View.VISIBLE);
 
-        providerContactsService = new ProviderContactsService(getApplicationContext());
+        getCustomerService = new GetCustomerService(getApplicationContext());
+
+
+
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        providerContactsService.addListener("CONTACTS_RETRIEVED", onContactsRetreived);
-        providerContactsService.getContacts(Model.userData.uid);
+        getCustomerService.getCustomerData(Model.userData.uid);
+        getCustomerService.addListener("CUSTOMER_RETRIEVED", onCustomerRetrieved);
     }
+
+    private EventListener onCustomerRetrieved = new EventListener() {
+        @Override
+        public void onEvent(Event event) {
+            getCustomerService.removeListener("CUSTOMER_RETRIEVED", onCustomerRetrieved);
+            if (getCustomerService.dataObj.historyArr != null && getCustomerService.dataObj.historyArr.size() > 0) {
+
+                noListings.setVisibility(View.GONE);
+            } else {
+                noListings.setVisibility(View.VISIBLE);
+            }
+            avaliableListView.setAdapter(listItemController);
+        }
+    };
+
 
     @Override
     public void onStop() {
         super.onStop();
-        providerContactsService.removeListener("CONTACTS_RETRIEVED", onContactsRetreived);
+        getCustomerService.removeListener("CUSTOMER_RETRIEVED", onCustomerRetrieved);
     }
-
-    private EventListener onContactsRetreived = new EventListener() {
-        @Override
-        public void onEvent(Event event) {
-
-            if(providerContactsService.numContacts == 0)
-            {
-                noListings.setVisibility(View.VISIBLE);
-            }
-            else
-            {
-                noListings.setVisibility(View.GONE);
-            }
-
-            avaliableListView.setAdapter(listItemController);
-
-
-        }
-    };
 
 
 
@@ -103,7 +102,7 @@ public class ContactsActivity extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            return providerContactsService.contactsArr.size();
+            return getCustomerService.dataObj.historyArr.size();
         }
 
         @Override
@@ -120,31 +119,56 @@ public class ContactsActivity extends AppCompatActivity {
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
 
-            final ContactData obj = providerContactsService.contactsArr.get(position);
+            HistoryData obj = getCustomerService.dataObj.historyArr.get(position);
 
-            convertView = getLayoutInflater().inflate(R.layout.interested_customer_line, null);
-            TextView cityTXT = convertView.findViewById(R.id.cityTXT);
-            TextView telTXT = convertView.findViewById(R.id.dateTXT);
-            TextView nameTXT = convertView.findViewById(R.id.timeTXT);
+            convertView = getLayoutInflater().inflate(R.layout.customer_history_line, null);
+            TextView phoneTXT = convertView.findViewById(R.id.phoneTXT);
+            TextView dateTXT = convertView.findViewById(R.id.dateTXT);
+            TextView nameTXT = convertView.findViewById(R.id.nameTXT);
 
+            dateTXT.setText( obj.getDate() );
+            phoneTXT.setText( obj.getPhoneNumber() );
+            nameTXT.setText( obj.getProviderName() );
 
-            cityTXT.setText( obj.getResidence() );
-            telTXT.setText( obj.getPhoneNumber() );
-            nameTXT.setText( obj.getDisplayName() );
+            final String number = obj.getPhoneNumber();
 
+            ImageView callBTN = convertView.findViewById(R.id.callBTN);
 
-            convertView.setOnClickListener(new View.OnClickListener(){
+            ImageView editBTN = convertView.findViewById(R.id.editBTN);
+
+            callBTN.setOnClickListener(new View.OnClickListener(){
 
                 @Override
                 public void onClick(View view) {
-                    makeCall(obj.getPhoneNumber());
+                    makeCall(number);
                     return;
+                }
+            });
+
+            editBTN.setOnClickListener(new View.OnClickListener(){
+
+                @Override
+                public void onClick(View view) {
+                    return;
+                }
+            });
+
+            final ImageView profile_image = convertView.findViewById(R.id.profile_image);
+            final GetProviderService.GetProfilePicService getProfilePicService = new GetProviderService.GetProfilePicService(getApplicationContext());
+            getProfilePicService.getImageFromDB(obj.getProviderId(), "profilePic");
+            getProfilePicService.addListener("PROFILE_PIC_RETRIEVED", new EventListener()
+            {
+                @Override
+                public void onEvent(Event event) {
+                    Glide.with(CustomerHistoryActivity.this).load(getProfilePicService.uri).into(profile_image);
+
                 }
             });
 
             return convertView;
         }
     }
+
 
     private void makeCall(String phoneNumber) {
 
@@ -161,9 +185,5 @@ public class ContactsActivity extends AppCompatActivity {
         }
         startActivity(intent);
     }
-
-
-
-
 
 }

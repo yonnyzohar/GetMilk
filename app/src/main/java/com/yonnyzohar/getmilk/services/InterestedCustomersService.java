@@ -37,7 +37,7 @@ public class InterestedCustomersService extends EventDispatcher{
         count = 0;
         RequestQueue queue = Volley.newRequestQueue(applicationContext);
 
-        String url ="https://us-central1-testproject-103c6.cloudfunctions.net/getInterestedCustomers?providerId=" +Model.userData.uid;
+        String url = Model.reqPrefix + "getInterestedCustomers?providerId=" +Model.userData.uid;
         Log.d(Model.TAG, url);
 
         // Request a string response from the provided URL.

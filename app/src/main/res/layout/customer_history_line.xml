@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="right"
+
+        >
+
+
+
+        <TextView
+
+            android:id="@+id/nameTXT"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/provider_name"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textSize="@dimen/label_size_huge"
+            android:textStyle="bold" />
+
+    <ImageView
+        android:id="@+id/profile_image"
+        android:layout_width="89dp"
+        android:layout_height="96dp"
+        android:layout_gravity="right" />
+
+    </LinearLayout>
+
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="left"
+        android:paddingTop="20sp"
+        android:paddingBottom="20sp"
+
+        >
+
+        <ImageView
+            android:id="@+id/callBTN"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_call_black_24dp"
+            android:layout_gravity="left"
+            android:padding="10sp"
+            android:layout_marginRight="10sp"/>
+
+
+
+
+
+        <ImageView
+            android:id="@+id/editBTN"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:src="@drawable/ic_edit_black_24dp"
+            android:padding="10sp"
+            android:layout_marginRight="10sp"/>
+
+
+
+        <TextView
+            android:id="@+id/dateTXT"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/label_size_small"
+            android:text="TextView"
+            android:padding="10sp"
+            android:layout_marginRight="10sp"
+            />
+
+
+        <TextView
+            android:id="@+id/phoneTXT"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/label_size_small"
+            android:text="TextView"
+            android:padding="10sp"
+            android:layout_marginRight="10sp"/>
+
+
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorPrimary"
+        ></View>
+
+
+</LinearLayout>

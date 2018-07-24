@@ -3,6 +3,12 @@ package com.yonnyzohar.getmilk.services;
 import android.content.Context;
 import android.util.Log;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -32,6 +38,8 @@ public class GetPendingAppointmentService extends EventDispatcher {
     public List<String> selectedRespondersArr;
     public int numSelectedResponders = 0;
 
+    public String chosenProviderId;
+
     public GetPendingAppointmentService(Context _applicationContext) {
 
         super();
@@ -40,13 +48,14 @@ public class GetPendingAppointmentService extends EventDispatcher {
         database = FirebaseDatabase.getInstance();
     }
 
-    public void getPendingAppointment()
+    public void getPendingAppointment(String customerId)
     {
         numUnSelectedResponders = 0;
         numSelectedResponders = 0;
+        chosenProviderId = null;
         unselectedRespondersArr = new ArrayList<String>();
         selectedRespondersArr = new ArrayList<String>();
-        appointmentNode = database.getReference("data").child(Model.DBRefs.APPOINTMENTS_IN_PROCESS).child(Model.userData.uid);
+        appointmentNode = database.getReference("data").child(Model.DBRefs.APPOINTMENTS_IN_PROCESS).child(customerId);
         appointmentNode.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -92,15 +101,19 @@ public class GetPendingAppointmentService extends EventDispatcher {
                                 String responderId = child.getKey().toString();
                                 String selectedByMother = child.getValue().toString();
                                 Log.d(Model.TAG, "key " + responderId + " val " + selectedByMother);
-                                if(selectedByMother == "false")
+                                if(selectedByMother == "false" || "false".equals(selectedByMother))
                                 {
                                     numUnSelectedResponders++;
                                     unselectedRespondersArr.add(responderId );
                                 }
-                                if(selectedByMother == "true")
+                                if(selectedByMother == "true" || "true".equals(selectedByMother))
                                 {
                                     numSelectedResponders++;
                                     selectedRespondersArr.add(responderId );
+                                }
+                                if(selectedByMother == "done" || "done".equals(selectedByMother))
+                                {
+                                    chosenProviderId = responderId;
                                 }
 
 
@@ -134,5 +147,42 @@ public class GetPendingAppointmentService extends EventDispatcher {
         setLocation = null;
         numUnSelectedResponders = 0;
         numSelectedResponders = 0;
+    }
+
+    public void resolveAppointment(GetProviderService.ProviderData providerData, String customerId) {
+
+        String str = "?providerName=" +providerData.name;
+        str += "&phoneNumber=" +providerData.phoneNumber;
+        str += "&providerId=" +providerData.providerId;
+        str += "&date=" +setDate;
+        str += "&location=" +setLocation;
+        str += "&customerId=" +customerId;
+
+        RequestQueue queue = Volley.newRequestQueue(applicationContext);
+
+        String url = Model.reqPrefix + "onCustomerMarkedAppointmentResolved" + str;
+        Log.d(Model.TAG, url);
+
+        // Request a string response from the provided URL.
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        // Display the first 500 characters of the response string.
+                        Log.d(Model.TAG, response);
+                        dispatchEvent(new SimpleEvent("PENDING_APPOINTMENT_RESOLVED"));
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d(Model.TAG,"That didn't work!");
+                dispatchEvent(new SimpleEvent("PENDING_APPOINTMENT_RESOLVED"));
+            }
+        });
+
+        queue.add(stringRequest);
+        deletePendingAppointment();
+
+
     }
 }

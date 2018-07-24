@@ -7,10 +7,14 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.yonnyzohar.getmilk.data.ContactData;
+import com.yonnyzohar.getmilk.data.HistoryData;
 import com.yonnyzohar.getmilk.data.Model;
 import com.yonnyzohar.getmilk.eventDispatcher.EventDispatcher;
 import com.yonnyzohar.getmilk.eventDispatcher.SimpleEvent;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 
@@ -20,6 +24,7 @@ public class GetCustomerService  extends EventDispatcher {
     FirebaseDatabase database;
     DatabaseReference customerNode;
     DatabaseReference fireBaseMessagingTokenNode;
+    DatabaseReference historyNode;
 
 
     public Boolean customerExists = false;
@@ -32,6 +37,7 @@ public class GetCustomerService  extends EventDispatcher {
         public String photoURL;
         public String uid;
         public String phoneNumber;
+        public List<HistoryData> historyArr;
     }
 
     public GetCustomerService.CustomerData dataObj;
@@ -48,9 +54,10 @@ public class GetCustomerService  extends EventDispatcher {
 
     public void getCustomerData(String customerId)
     {
-
+        dataObj.uid = customerId;
         customerNode = database.getReference("data").child(Model.DBRefs.CUSTOMERS).child(customerId);
         fireBaseMessagingTokenNode = customerNode.child("fireBaseMessagingToken");
+        historyNode = customerNode.child("appointmentsHistory");
         customerNode.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -67,6 +74,18 @@ public class GetCustomerService  extends EventDispatcher {
                     else
                     {
                         customerExists = true;
+
+                        DataSnapshot appointmentsHistory = dataSnapshot.child("appointmentsHistory");
+                        if(appointmentsHistory.exists())
+                        {
+                            dataObj.historyArr = new ArrayList<HistoryData>();
+
+                            for(DataSnapshot child : appointmentsHistory.getChildren() ) {
+
+                                HistoryData data = child.getValue(HistoryData.class);
+                                dataObj.historyArr.add( data );
+                            }
+                        }
 
                         DataSnapshot phoneNumberNode = dataSnapshot.child("phoneNumber");
                         if(phoneNumberNode.exists())
