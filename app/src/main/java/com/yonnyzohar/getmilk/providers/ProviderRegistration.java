@@ -7,7 +7,6 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
@@ -18,20 +17,14 @@ import android.widget.Switch;
 import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 
 import com.yonnyzohar.getmilk.GameActivity;
-import com.yonnyzohar.getmilk.GetProfilePicService;
-import com.yonnyzohar.getmilk.GetProviderService;
+import com.yonnyzohar.getmilk.services.GetProviderService;
 import com.yonnyzohar.getmilk.Methods;
-import com.yonnyzohar.getmilk.Model;
+import com.yonnyzohar.getmilk.data.Model;
 import com.yonnyzohar.getmilk.R;
 import com.yonnyzohar.getmilk.eventDispatcher.Event;
 import com.yonnyzohar.getmilk.eventDispatcher.EventListener;
@@ -51,7 +44,7 @@ public class ProviderRegistration extends GameActivity
     Button confirmBTN;
     Switch ibclcEntToggleBTN;
 
-    GetProfilePicService getProfilePicService;
+    GetProviderService.GetProfilePicService getProfilePicService;
     GetProviderService getProviderService;
 
 
@@ -250,7 +243,7 @@ public class ProviderRegistration extends GameActivity
 
             bioTXT.setText( dataObj.aboutMe );
 
-            getProfilePicService = new GetProfilePicService(getApplicationContext());
+            getProfilePicService = new GetProviderService.GetProfilePicService(getApplicationContext());
             getProfilePicService.getImageFromDB(Model.userData.uid, "profilePic");
             getProfilePicService.addListener("PROFILE_PIC_RETRIEVED", onProfilePicRetreived);
 

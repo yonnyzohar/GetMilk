@@ -1,15 +1,11 @@
 package com.yonnyzohar.getmilk.sharedScreens;
 
-import android.app.PendingIntent;
-import android.content.Intent;
-import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
-import com.yonnyzohar.getmilk.Model;
-import com.yonnyzohar.getmilk.R;
+import com.yonnyzohar.getmilk.data.Model;
 
 public class NotificationManager extends FirebaseMessagingService {
 

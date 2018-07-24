@@ -91,7 +91,7 @@
             android:label="@string/title_activity_provider_main"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".VerifyPhone"
+            android:name=".sharedScreens.VerifyPhone"
             android:label="@string/title_activity_verify_phone"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
@@ -129,6 +129,10 @@
         <activity
             android:name=".providers.InterestedCustmersActivity"
             android:label="@string/title_activity_interested_custmers"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".providers.ContactsActivity"
+            android:label="@string/title_activity_contacts"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

@@ -1,8 +1,6 @@
 package com.yonnyzohar.getmilk.sharedScreens;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
@@ -19,9 +17,8 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.yonnyzohar.getmilk.Model;
+import com.yonnyzohar.getmilk.data.Model;
 import com.yonnyzohar.getmilk.R;
-import com.yonnyzohar.getmilk.customers.OrderConsultant;
 
 public class CitiesSingleChoice extends AppCompatActivity {
 

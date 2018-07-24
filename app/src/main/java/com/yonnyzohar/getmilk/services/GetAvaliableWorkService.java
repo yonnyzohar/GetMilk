@@ -1,8 +1,7 @@
-package com.yonnyzohar.getmilk.providers;
+package com.yonnyzohar.getmilk.services;
 
 import android.content.Context;
 import android.util.Log;
-import android.view.View;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -23,8 +22,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.yonnyzohar.getmilk.Model;
-import com.yonnyzohar.getmilk.eventDispatcher.Event;
+import com.yonnyzohar.getmilk.data.Model;
 import com.yonnyzohar.getmilk.eventDispatcher.EventDispatcher;
 import com.yonnyzohar.getmilk.eventDispatcher.SimpleEvent;
 
@@ -105,7 +103,7 @@ public class GetAvaliableWorkService extends EventDispatcher {
         RequestQueue queue = Volley.newRequestQueue(applicationContext);
 
         //"https://us-central1-testproject-103c6.cloudfunctions.net/getAppointments?cities=חולון,תל אביב"
-        String url ="https://us-central1-testproject-103c6.cloudfunctions.net/getAppointments" + citiesReq;
+        String url = Model.reqPrefix + "getAppointments" + citiesReq;
         Log.d(Model.TAG, url);
 
         // Request a string response from the provided URL.
@@ -131,11 +129,11 @@ public class GetAvaliableWorkService extends EventDispatcher {
     private void parseAvaliableWorkResponse(String response)
     {
         //{"appointments":[{"costumerId":"7Mql2T5LtTV3bYXyQKbm3Juv4622","date":"Sun, Mar 4, '18","location":"חולון","recipients":true,"status":0,"time":"22:34"}]}
-
+        appointmentsArr = new ArrayList<JSONObject>();
         try {
             JSONObject obj = new JSONObject(response);
             JSONArray appointmentsArrJSON = obj.getJSONArray("appointments");
-            appointmentsArr = new ArrayList<JSONObject>();
+
 
             for (int i=0; i<appointmentsArrJSON.length(); i++) {
                 count++;

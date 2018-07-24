@@ -1,4 +1,4 @@
-package com.yonnyzohar.getmilk;
+package com.yonnyzohar.getmilk.data;
 
 public class ReviewerData {
     private String customerId;

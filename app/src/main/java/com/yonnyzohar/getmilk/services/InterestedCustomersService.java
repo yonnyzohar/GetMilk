@@ -1,4 +1,4 @@
-package com.yonnyzohar.getmilk.providers;
+package com.yonnyzohar.getmilk.services;
 
 import android.content.Context;
 import android.util.Log;
@@ -9,7 +9,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.yonnyzohar.getmilk.Model;
+import com.yonnyzohar.getmilk.data.Model;
 import com.yonnyzohar.getmilk.eventDispatcher.EventDispatcher;
 import com.yonnyzohar.getmilk.eventDispatcher.SimpleEvent;
 
@@ -62,10 +62,11 @@ public class InterestedCustomersService extends EventDispatcher{
 
     private void parseResponse(String response)
     {
+        appointmentsArr = new ArrayList<JSONObject>();
         try {
             JSONObject obj = new JSONObject(response);
             JSONArray appointmentsArrJSON = obj.getJSONArray("appointments");
-            appointmentsArr = new ArrayList<JSONObject>();
+
 
             for (int i=0; i<appointmentsArrJSON.length(); i++) {
                 count++;

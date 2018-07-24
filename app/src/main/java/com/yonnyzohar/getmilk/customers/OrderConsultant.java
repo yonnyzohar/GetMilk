@@ -9,22 +9,12 @@ import android.location.Geocoder;
 import android.os.Build;
 import android.os.Bundle;
 
-import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.RadioButton;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 
 import android.widget.TextView;
@@ -34,7 +24,6 @@ import android.widget.Toast;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -43,7 +32,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import com.yonnyzohar.getmilk.GameActivity;
-import com.yonnyzohar.getmilk.Model;
+import com.yonnyzohar.getmilk.data.Model;
 import com.yonnyzohar.getmilk.R;
 import com.yonnyzohar.getmilk.sharedScreens.CitiesSingleChoice;
 

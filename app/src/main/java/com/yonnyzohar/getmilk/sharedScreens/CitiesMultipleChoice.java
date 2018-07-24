@@ -27,7 +27,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.yonnyzohar.getmilk.Model;
+import com.yonnyzohar.getmilk.data.Model;
 import com.yonnyzohar.getmilk.R;
 
 public class CitiesMultipleChoice extends AppCompatActivity {

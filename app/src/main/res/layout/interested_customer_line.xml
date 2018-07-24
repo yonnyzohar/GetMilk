@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center"
+        android:padding="20sp"
+
+        >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:src="@drawable/ic_call_black_24dp"/>
+
+        <View
+            android:layout_height="match_parent"
+            android:layout_width="1dp"
+            android:background="@color/colorPrimary"
+            android:layout_marginRight="6dp"
+            android:layout_marginLeft="6dp"
+            ></View>
+
+        <TextView
+            android:id="@+id/dateTXT"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/label_size_small"
+            android:text="TextView" />
+
+        <View
+            android:layout_height="match_parent"
+            android:layout_width="1dp"
+            android:background="@color/colorPrimary"
+            android:layout_marginRight="5dp"
+            android:layout_marginLeft="5dp"
+            ></View>
+
+
+        <TextView
+            android:id="@+id/timeTXT"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/label_size_small"
+            android:text="TextView" />
+
+        <View
+            android:layout_height="match_parent"
+            android:layout_width="1dp"
+            android:background="@color/colorPrimary"
+            android:layout_marginRight="5dp"
+            android:layout_marginLeft="5dp"
+            ></View>
+
+
+        <TextView
+            android:id="@+id/cityTXT"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/label_size_small"
+            android:text="TextView" />
+
+    </LinearLayout>
+
+
+</LinearLayout>

@@ -7,29 +7,24 @@ import android.os.Build;
 import android.os.Bundle;
 
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 
 import java.util.HashMap;
 import java.util.Map;
 
 import com.yonnyzohar.getmilk.GameActivity;
-import com.yonnyzohar.getmilk.HomeActivity;
 import com.yonnyzohar.getmilk.Methods;
-import com.yonnyzohar.getmilk.Model;
+import com.yonnyzohar.getmilk.data.Model;
 import com.yonnyzohar.getmilk.R;
-import com.yonnyzohar.getmilk.VerifyPhone;
+import com.yonnyzohar.getmilk.services.GetPendingAppointmentService;
+import com.yonnyzohar.getmilk.services.GetCustomerService;
+import com.yonnyzohar.getmilk.sharedScreens.VerifyPhone;
 import com.yonnyzohar.getmilk.eventDispatcher.Event;
 import com.yonnyzohar.getmilk.eventDispatcher.EventListener;
 

@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
+import com.yonnyzohar.getmilk.data.Model;
 
 /**
  * Created by yonny on 17/04/2018.

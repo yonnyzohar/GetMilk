@@ -1,23 +1,18 @@
-package com.yonnyzohar.getmilk.customers;
+package com.yonnyzohar.getmilk.services;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.yonnyzohar.getmilk.Model;
-import com.yonnyzohar.getmilk.ReviewerData;
+import com.yonnyzohar.getmilk.data.Model;
+import com.yonnyzohar.getmilk.data.ReviewerData;
 import com.yonnyzohar.getmilk.eventDispatcher.EventDispatcher;
 import com.yonnyzohar.getmilk.eventDispatcher.SimpleEvent;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class ProviderReviewsService extends EventDispatcher {
@@ -29,9 +24,6 @@ public class ProviderReviewsService extends EventDispatcher {
     public List<ReviewerData> reviewsArr;
 
 
-
-
-
     public ProviderReviewsService(Context _applicationContext) {
 
         super();
@@ -41,7 +33,7 @@ public class ProviderReviewsService extends EventDispatcher {
 
     public void getReviews(String providerId) {
         numReviews = 0;
-
+        reviewsArr = new ArrayList<ReviewerData>();
         reviewstNode = database.getReference("data").child(Model.DBRefs.REVIEWS).child(providerId);
         reviewstNode.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -53,15 +45,10 @@ public class ProviderReviewsService extends EventDispatcher {
 
                 if(dataSnapshot.exists()) {
 
-                    reviewsArr = new ArrayList<ReviewerData>();
-
-
                     //children should be an array
                     for(DataSnapshot child : dataSnapshot.getChildren() ){
 
                         ReviewerData data = child.getValue(ReviewerData.class);
-
-
 
                         numReviews++;
                         reviewsArr.add( data );

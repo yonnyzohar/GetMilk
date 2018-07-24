@@ -8,27 +8,29 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.yonnyzohar.getmilk.GetProviderService;
-import com.yonnyzohar.getmilk.Methods;
-import com.yonnyzohar.getmilk.Model;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.yonnyzohar.getmilk.services.GetProviderService;
+import com.yonnyzohar.getmilk.data.Model;
 import com.yonnyzohar.getmilk.R;
-import com.yonnyzohar.getmilk.VerifyPhone;
-import com.yonnyzohar.getmilk.customers.CustomerMain;
-import com.yonnyzohar.getmilk.customers.GetCustomerService;
+import com.yonnyzohar.getmilk.services.GetCustomerService;
 import com.yonnyzohar.getmilk.eventDispatcher.Event;
 import com.yonnyzohar.getmilk.eventDispatcher.EventListener;
+import com.yonnyzohar.getmilk.services.InterestedCustomersService;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class InterestedCustmersActivity extends AppCompatActivity {
 
@@ -36,10 +38,12 @@ public class InterestedCustmersActivity extends AppCompatActivity {
     ListView avaliableListView;
     InterestedCustmersActivity.ListItemController listItemController;
     TextView noListings;
-    String customerId;
+
     int numFreeLeadsLeft;
     GetCustomerService getCustomerService;
     GetProviderService getProviderService;
+
+    String selectedCustomer = "";
 
 
     @Override
@@ -119,7 +123,7 @@ public class InterestedCustmersActivity extends AppCompatActivity {
 
             JSONObject obj = interestedCustomersService.appointmentsArr.get(position);
 
-            convertView = getLayoutInflater().inflate(R.layout.avaliableappointment, null);
+            convertView = getLayoutInflater().inflate(R.layout.interested_customer_line, null);
             TextView cityTXT = convertView.findViewById(R.id.cityTXT);
             TextView dateTXT = convertView.findViewById(R.id.dateTXT);
             TextView timeTXT = convertView.findViewById(R.id.timeTXT);
@@ -127,6 +131,7 @@ public class InterestedCustmersActivity extends AppCompatActivity {
             String cityStr = "";
             String dateStr = "";
             String timeStr = "";
+            String customerId ="";
 
 
             try {
@@ -142,11 +147,14 @@ public class InterestedCustmersActivity extends AppCompatActivity {
             dateTXT.setText( dateStr );
             timeTXT.setText( timeStr );
 
+            final String localCustomer = customerId;
+
             convertView.setOnClickListener(new View.OnClickListener(){
 
                 @Override
                 public void onClick(View view) {
-                    onLineClicked(customerId);
+                    selectedCustomer = localCustomer;
+                    onLineClicked();
                     return;
                 }
             });
@@ -155,16 +163,10 @@ public class InterestedCustmersActivity extends AppCompatActivity {
         }
     }
 
-    private void onLineClicked(String customerId) {
+    private void onLineClicked() {
 
-        getCustomerNumber(customerId);
-
-
-    }
-
-    private void getCustomerNumber(String customerId) {
         getCustomerService = new GetCustomerService(getApplicationContext());
-        getCustomerService.getCustomerData(customerId);
+        getCustomerService.getCustomerData(selectedCustomer);
         getCustomerService.addListener("CUSTOMER_RETRIEVED", onCustomerRetrieved);
     }
 
@@ -198,10 +200,10 @@ public class InterestedCustmersActivity extends AppCompatActivity {
 
     private void makeCall(String phoneNumber) {
 
-        getProviderService.callMade(Model.userData.uid, getCustomerService.dataObj, numFreeLeadsLeft);
+        callMade(Model.userData.uid, getCustomerService.dataObj);
 
-        Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + phoneNumber));
-        /*if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+        Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + phoneNumber));
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
             //    ActivityCompat#requestPermissions
             // here to request the missing permissions, and then overriding
@@ -209,11 +211,39 @@ public class InterestedCustmersActivity extends AppCompatActivity {
             //                                          int[] grantResults)
             // to handle the case where the user grants the permission. See the documentation
             // for ActivityCompat#requestPermissions for more details.
-            return;
-        }*/
+            intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + phoneNumber));
+        }
         startActivity(intent);
     }
 
+    private void callMade(String uid, GetCustomerService.CustomerData dataObj) {
+
+
+        String str = "?customerId="+dataObj.uid+
+                     "&providerId="+Model.userData.uid +
+                     "&displayName=" +dataObj.displayName +
+                     "&phoneNumber=" + dataObj.phoneNumber+
+                     "&residence="+dataObj.residence;
+        RequestQueue queue = Volley.newRequestQueue(this);
+
+        String url = Model.reqPrefix + "onProviderGotCustomerNumber" + str;
+
+        // Request a string response from the provided URL.
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.d(Model.TAG, response);
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d(Model.TAG,"That didn't work!");
+            }
+        });
+
+        queue.add(stringRequest);
+    }
 
 
 }

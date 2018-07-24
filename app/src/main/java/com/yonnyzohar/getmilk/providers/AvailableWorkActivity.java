@@ -20,17 +20,14 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import com.yonnyzohar.getmilk.Model;
+import com.yonnyzohar.getmilk.data.Model;
 import com.yonnyzohar.getmilk.R;
 import com.yonnyzohar.getmilk.eventDispatcher.Event;
 import com.yonnyzohar.getmilk.eventDispatcher.EventListener;
+import com.yonnyzohar.getmilk.services.GetAvaliableWorkService;
 
 public class AvailableWorkActivity extends AppCompatActivity {
 
@@ -166,7 +163,7 @@ public class AvailableWorkActivity extends AppCompatActivity {
         RequestQueue queue = Volley.newRequestQueue(this);
         String str = "?customerId="+customerId+"&providerId="+Model.userData.uid;
 
-        String url ="https://us-central1-testproject-103c6.cloudfunctions.net/onProviderBidsForJob" + str;
+        String url = Model.reqPrefix + "onProviderBidsForJob" + str;
 
         // Request a string response from the provided URL.
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,

@@ -1,4 +1,4 @@
-package com.yonnyzohar.getmilk;
+package com.yonnyzohar.getmilk.data;
 
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 
@@ -18,6 +18,8 @@ public class Model {
         public String photoUrl;
         public String residence;
     }
+
+    public static String reqPrefix = "https://us-central1-testproject-103c6.cloudfunctions.net/";
 
    /* public static class ProviderData{
         public String[] cities;

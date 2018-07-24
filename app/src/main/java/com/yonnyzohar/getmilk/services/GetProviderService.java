@@ -1,21 +1,28 @@
-package com.yonnyzohar.getmilk;
+package com.yonnyzohar.getmilk.services;
 
 import android.content.Context;
+import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import com.yonnyzohar.getmilk.customers.GetCustomerService;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.yonnyzohar.getmilk.data.Model;
+import com.yonnyzohar.getmilk.data.ReviewerData;
 import com.yonnyzohar.getmilk.eventDispatcher.EventDispatcher;
 import com.yonnyzohar.getmilk.eventDispatcher.SimpleEvent;
 import android.view.View;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 public class GetProviderService extends EventDispatcher{
 
@@ -35,6 +42,8 @@ public class GetProviderService extends EventDispatcher{
     public DatabaseReference displayNameNode;
     public DatabaseReference numConsultationsNode;
     public DatabaseReference numFreeLeadsLeftNode;
+
+    public List<ReviewerData> contactsArr;
 
 
 
@@ -194,6 +203,20 @@ public class GetProviderService extends EventDispatcher{
                         displayNameNode.setValue(Model.userData.name);
                     }
 
+                    DataSnapshot contacts = dataSnapshot.child("contacts");
+                    if(contacts.exists())
+                    {
+                        contactsArr = new ArrayList<ReviewerData>();
+
+
+                        //children should be an array
+                        for(DataSnapshot child : contacts.getChildren() ){
+
+                            ReviewerData data = child.getValue(ReviewerData.class);
+                            contactsArr.add( data );
+                        }
+                    }
+
 
 
                 }
@@ -208,25 +231,6 @@ public class GetProviderService extends EventDispatcher{
         });
     }
 
-    //redo this in node!!!
-    public void callMade(String providerId, GetCustomerService.CustomerData dataObj, int numFreeLeadsLeft) {
-
-        Map userData = new HashMap();
-        userData.put("uid" , Model.userData.name);
-        userData.put( "displayName", dataObj.displayName);
-        userData.put("phoneNumber", dataObj.phoneNumber);
-
-        Map data = new HashMap();
-        data.put(dataObj.uid , userData);
-
-        providerNode        = database.getReference("data").child(Model.DBRefs.PROVIDERS).child( providerId );
-        DatabaseReference retrievedNumbersNode = providerNode.child("retrievedNumbers");
-        retrievedNumbersNode.updateChildren(data);
-
-        numFreeLeadsLeftNode    = providerNode.child("numFreeLeadsLeft");
-        numFreeLeadsLeftNode.setValue(numFreeLeadsLeft);
-
-    }
 
     public View getConvertView() {
         return this.convertView;
@@ -234,5 +238,41 @@ public class GetProviderService extends EventDispatcher{
 
     public void setConvertView(View convertView) {
         this.convertView = convertView;
+    }
+
+    public static class GetProfilePicService extends EventDispatcher {
+
+        Context applicationContext;
+        public Uri uri;
+
+        public GetProfilePicService(Context _applicationContext) {
+
+            super();
+            applicationContext = _applicationContext;
+
+        }
+
+        public void getImageFromDB(String uid, String imgName) {
+            FirebaseStorage storage = FirebaseStorage.getInstance();
+            StorageReference storageRef = storage.getReference();
+            StorageReference picRef = storageRef.child("images/"+uid+"/"+imgName+".jpg");
+            picRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                @Override
+                public void onSuccess(Uri _uri) {
+                    uri = _uri;
+                    // Got the download URL for 'users/me/profile.png'
+                    //clsInstance.onImgRetreivedFromDB(uri);
+                    dispatchEvent(new SimpleEvent("PROFILE_PIC_RETRIEVED"));
+
+
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    // Handle any errors
+                    Boolean bob = true;
+                }
+            });
+        }
     }
 }

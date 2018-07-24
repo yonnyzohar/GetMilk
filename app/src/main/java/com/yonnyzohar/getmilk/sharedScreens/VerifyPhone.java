@@ -1,4 +1,4 @@
-package com.yonnyzohar.getmilk;
+package com.yonnyzohar.getmilk.sharedScreens;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -23,6 +23,8 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
 
+import com.yonnyzohar.getmilk.data.Model;
+import com.yonnyzohar.getmilk.R;
 import com.yonnyzohar.getmilk.customers.OrderConsultant;
 import com.yonnyzohar.getmilk.providers.ProviderMain;
 

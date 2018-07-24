@@ -1,4 +1,4 @@
-package com.yonnyzohar.getmilk.customers;
+package com.yonnyzohar.getmilk.services;
 
 import android.content.Context;
 import android.util.Log;
@@ -9,13 +9,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import com.yonnyzohar.getmilk.Model;
+import com.yonnyzohar.getmilk.data.Model;
 import com.yonnyzohar.getmilk.eventDispatcher.EventDispatcher;
 import com.yonnyzohar.getmilk.eventDispatcher.SimpleEvent;
 
@@ -46,6 +44,8 @@ public class GetPendingAppointmentService extends EventDispatcher {
     {
         numUnSelectedResponders = 0;
         numSelectedResponders = 0;
+        unselectedRespondersArr = new ArrayList<String>();
+        selectedRespondersArr = new ArrayList<String>();
         appointmentNode = database.getReference("data").child(Model.DBRefs.APPOINTMENTS_IN_PROCESS).child(Model.userData.uid);
         appointmentNode.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -86,8 +86,7 @@ public class GetPendingAppointmentService extends EventDispatcher {
                         DataSnapshot responders = dataSnapshot.child("responders");
                         if(responders.exists())
                         {
-                            unselectedRespondersArr = new ArrayList<String>();
-                            selectedRespondersArr = new ArrayList<String>();
+
                             for(DataSnapshot child : responders.getChildren() ){
 
                                 String responderId = child.getKey().toString();

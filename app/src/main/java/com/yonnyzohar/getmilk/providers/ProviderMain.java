@@ -1,7 +1,6 @@
 package com.yonnyzohar.getmilk.providers;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -17,13 +16,13 @@ import com.google.firebase.auth.FirebaseUser;
 
 
 import com.yonnyzohar.getmilk.GameActivity;
-import com.yonnyzohar.getmilk.GetProfilePicService;
-import com.yonnyzohar.getmilk.GetProviderService;
-import com.yonnyzohar.getmilk.Methods;
-import com.yonnyzohar.getmilk.Model;
+import com.yonnyzohar.getmilk.services.GetAvaliableWorkService;
+import com.yonnyzohar.getmilk.services.GetProviderService;
+import com.yonnyzohar.getmilk.data.Model;
 import com.yonnyzohar.getmilk.R;
 import com.yonnyzohar.getmilk.eventDispatcher.Event;
 import com.yonnyzohar.getmilk.eventDispatcher.EventListener;
+import com.yonnyzohar.getmilk.services.InterestedCustomersService;
 
 //if provider has finished signup- send to
 public class ProviderMain extends GameActivity {
@@ -43,7 +42,7 @@ public class ProviderMain extends GameActivity {
 
     GetAvaliableWorkService avaliableWorkService;
     GetProviderService getProviderService;
-    GetProfilePicService getProfilePicService;
+    GetProviderService.GetProfilePicService getProfilePicService;
 
     InterestedCustomersService interestedCustomersService;
 
@@ -125,15 +124,6 @@ public class ProviderMain extends GameActivity {
         starsArr = new int[]{R.id.star_1, R.id.star_2, R.id.star_3, R.id.star_4, R.id.star_5};
         showButtons();
 
-       /*
-        Tel:"0547822029"
-        acceptingBids:true
-        cities: "Holon", "Tel Aviv"
-        email:"dudi@gamil.com"
-        ibclc:true
-        name:"Dudi Zohar"
-        description : "I am the best"
-        */
     }
 
     @Override
@@ -164,12 +154,21 @@ public class ProviderMain extends GameActivity {
 
             if(getProviderService.showEditProfileScreen)
             {
-                hideButtons();
                 Intent intent = new Intent(getApplicationContext(), ProviderRegistration.class);
                 startActivity(intent);
             }
             else
             {
+
+                appointmentsHistoryBTN.setOnClickListener(new View.OnClickListener(){
+
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(getApplicationContext(), ContactsActivity.class);
+                        startActivity(intent);
+                        return;
+                    }
+                });
 
                 availabilityToggleBTN.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -215,7 +214,7 @@ public class ProviderMain extends GameActivity {
                 TextView priceTXT = findViewById( R.id.priceTXT );
                 priceTXT.setText( Integer.toString(dataObj.price) + "₪");
 
-                getProfilePicService = new GetProfilePicService(getApplicationContext());
+                getProfilePicService = new GetProviderService.GetProfilePicService(getApplicationContext());
                 getProfilePicService.getImageFromDB(Model.userData.uid, "profilePic");
                 getProfilePicService.addListener("PROFILE_PIC_RETRIEVED", onProfilePicRetreived);
 
@@ -320,14 +319,6 @@ public class ProviderMain extends GameActivity {
         availabilityToggleBTN.setVisibility(View.VISIBLE);
     }
 
-    private void hideButtons() {
-
-        appointmentsHistoryBTN.setVisibility(View.INVISIBLE);
-        seeReviewsBTN.setVisibility(View.INVISIBLE);
-        editDetailsBTN.setVisibility(View.INVISIBLE);
-        availableWorkBTN.setVisibility(View.INVISIBLE);
-        availabilityToggleBTN.setVisibility(View.INVISIBLE);
-    }
 
 
 }

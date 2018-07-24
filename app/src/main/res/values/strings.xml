@@ -70,7 +70,7 @@
 
     <string name="intersted_mothers"><font size="30">אמהות שרוצות אותי</font>\n\<font size="15">אמהות שהשיבו בחיוב לפניה שלי</font></string>
 
-    <string name="appointment_history"><font size="30">היסטוריית פגישות</font>\n\<font size="15"> אמהות עימן נפגשתי</font></string>
+    <string name="appointment_history"><font size="30">ספר טלפונים</font>\n\<font size="15"> אמהות עימן יצרתי קשר</font></string>
 
 
     <string name="my_reviews">ביקורות שכתבו עלי</string>
@@ -98,8 +98,8 @@
     <string name="erase_appointment">מחיקת פגישה</string>
     <string name="title_activity_sign_up">הרשמה</string>
     <string name="title_activity_home">בחירת סוג משתמש</string>
-    <string name="title_activity_cities_single_choice">CitiesSingleChoice</string>
-    <string name="title_activity_provider_screen_for_customer">ProviderScreenForCustomer</string>
+    <string name="title_activity_cities_single_choice">בחירת מיקום הפגישה</string>
+    <string name="title_activity_provider_screen_for_customer">דף יועצת</string>
     <string name="about_me_header">קצת עלי</string>
     <string name="rating_txt">דירוג</string>
     <string name="rating_label_txt">דירוג</string>
@@ -110,6 +110,8 @@
     <string name="user_is_consultant">אני יועצת/ /מדריכת הנקה</string>
     <string name="user_is_customer">אני אמא שזקוקה לייעוץ הנקה</string>
     <string name="confirm">אישור</string>
+    <string name="title_activity_contacts">ספר טלפונים</string>
+    <string name="press_appointment">בחרי פגישה כדי להציע את עצמך</string>
 
 
 </resources>

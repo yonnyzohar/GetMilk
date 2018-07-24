@@ -2,13 +2,11 @@ package com.yonnyzohar.getmilk.customers;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -16,13 +14,11 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
-import com.yonnyzohar.getmilk.GetProfilePicService;
-import com.yonnyzohar.getmilk.GetProviderService;
+import com.yonnyzohar.getmilk.services.GetPendingAppointmentService;
+import com.yonnyzohar.getmilk.services.GetProviderService;
 import com.yonnyzohar.getmilk.R;
 import com.yonnyzohar.getmilk.eventDispatcher.Event;
 import com.yonnyzohar.getmilk.eventDispatcher.EventListener;
-import com.yonnyzohar.getmilk.providers.ProviderMain;
-import com.yonnyzohar.getmilk.providers.ProviderRegistration;
 
 
 public class RespondingProviders extends AppCompatActivity {
@@ -187,7 +183,7 @@ public class RespondingProviders extends AppCompatActivity {
 
                     //image
                     final ImageView profile_image = convertView.findViewById(R.id.profile_image);
-                    final GetProfilePicService  getProfilePicService = new GetProfilePicService(getApplicationContext());
+                    final GetProviderService.GetProfilePicService getProfilePicService = new GetProviderService.GetProfilePicService(getApplicationContext());
                     getProfilePicService.getImageFromDB(dataObj.providerId, "profilePic");
                     getProfilePicService.addListener("PROFILE_PIC_RETRIEVED", new EventListener()
                     {
