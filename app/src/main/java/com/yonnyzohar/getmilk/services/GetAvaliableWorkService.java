@@ -22,6 +22,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.yonnyzohar.getmilk.Methods;
 import com.yonnyzohar.getmilk.data.Model;
 import com.yonnyzohar.getmilk.eventDispatcher.EventDispatcher;
 import com.yonnyzohar.getmilk.eventDispatcher.SimpleEvent;
@@ -104,7 +105,7 @@ public class GetAvaliableWorkService extends EventDispatcher {
 
         //"https://us-central1-testproject-103c6.cloudfunctions.net/getAppointments?cities=חולון,תל אביב"
         String url = Model.reqPrefix + "getAppointments" + citiesReq;
-        Log.d(Model.TAG, url);
+        Methods.log(Model.TAG, url);
 
         // Request a string response from the provided URL.
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
@@ -112,13 +113,13 @@ public class GetAvaliableWorkService extends EventDispatcher {
                     @Override
                     public void onResponse(String response) {
                         // Display the first 500 characters of the response string.
-                        Log.d(Model.TAG, response);
+                        Methods.log(Model.TAG, response);
                         parseAvaliableWorkResponse(response);
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d(Model.TAG,"That didn't work!");
+                Methods.log(Model.TAG,"That didn't work!");
             }
         });
 

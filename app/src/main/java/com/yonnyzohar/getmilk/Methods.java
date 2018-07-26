@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -77,10 +78,9 @@ public class Methods {
     }
 
 
-
-
-
-
+    public static void log(String tag, String s) {
+        Log.d(tag, s);
+    }
 }
 
 

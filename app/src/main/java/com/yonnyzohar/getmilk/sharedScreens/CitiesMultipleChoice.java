@@ -27,6 +27,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.yonnyzohar.getmilk.Methods;
 import com.yonnyzohar.getmilk.data.Model;
 import com.yonnyzohar.getmilk.R;
 
@@ -80,7 +81,7 @@ public class CitiesMultipleChoice extends AppCompatActivity {
 
                         for (DataSnapshot postSnapshot: cities.getChildren()) {
                             String cityStr = postSnapshot.getValue(String.class);
-                            Log.w(Model.TAG, cityStr);
+                            Methods.log(Model.TAG, cityStr);
                             citiesDict.put(cityStr, true);
                         }
                     }

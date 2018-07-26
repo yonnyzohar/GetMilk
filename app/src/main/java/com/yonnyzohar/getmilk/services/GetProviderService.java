@@ -15,6 +15,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.yonnyzohar.getmilk.Methods;
 import com.yonnyzohar.getmilk.data.Model;
 import com.yonnyzohar.getmilk.data.ReviewerData;
 import com.yonnyzohar.getmilk.eventDispatcher.EventDispatcher;
@@ -109,7 +110,7 @@ public class GetProviderService extends EventDispatcher{
 
                 if(Boolean.class.isAssignableFrom(value.getClass()))
                 {
-                    Log.d(Model.TAG, "Value is a bool - > go to provider registration page");
+                    Methods.log(Model.TAG, "Value is a bool - > go to provider registration page");
 
                     showEditProfileScreen = true;
 

@@ -23,6 +23,8 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
 
+import com.yonnyzohar.getmilk.Methods;
+import com.yonnyzohar.getmilk.customers.CustomerMain;
 import com.yonnyzohar.getmilk.data.Model;
 import com.yonnyzohar.getmilk.R;
 import com.yonnyzohar.getmilk.customers.OrderConsultant;
@@ -74,7 +76,7 @@ public class VerifyPhone extends AppCompatActivity {
 
                         @Override
                         public void onVerificationCompleted(PhoneAuthCredential credential) {
-                            // Log.d(TAG, "onVerificationCompleted:" + credential);
+                            // Methods.log(TAG, "onVerificationCompleted:" + credential);
                             mVerificationInProgress = false;
                             Toast.makeText(VerifyPhone.this,R.string.verification_complete,Toast.LENGTH_SHORT).show();
                             signInWithPhoneAuthCredential(credential);
@@ -82,7 +84,7 @@ public class VerifyPhone extends AppCompatActivity {
 
                         @Override
                         public void onVerificationFailed(FirebaseException e) {
-                            // Log.w(TAG, "onVerificationFailed", e);
+                            // Methods.log(TAG, "onVerificationFailed", e);
                             Toast.makeText(VerifyPhone.this,R.string.verification_failed,Toast.LENGTH_SHORT).show();
                             if (e instanceof FirebaseAuthInvalidCredentialsException) {
                                 // Invalid request
@@ -96,7 +98,7 @@ public class VerifyPhone extends AppCompatActivity {
                         @Override
                         public void onCodeSent(String verificationId,
                                                PhoneAuthProvider.ForceResendingToken token) {
-                            // Log.d(TAG, "onCodeSent:" + verificationId);
+                            // Methods.log(TAG, "onCodeSent:" + verificationId);
                             Toast.makeText(VerifyPhone.this,R.string.verification_sent,Toast.LENGTH_SHORT).show();
                             // Save verification ID and resending token so we can use them later
                             mVerificationId = verificationId;
@@ -124,7 +126,7 @@ public class VerifyPhone extends AppCompatActivity {
         });
 
 
-        Log.d(Model.TAG,  "Verifiy phone displayed!!");
+        Methods.log(Model.TAG,  "Verifiy phone displayed!!");
 
     }
 
@@ -137,7 +139,7 @@ public class VerifyPhone extends AppCompatActivity {
                 {
                     if(Model.userType == Model.DBRefs.CUSTOMERS)
                     {
-                        Intent intent = new Intent(VerifyPhone.this, OrderConsultant.class);//OrderConsultant
+                        Intent intent = new Intent(VerifyPhone.this, CustomerMain.class);//OrderConsultant
                         //intent.putExtra("userName", "fucking moron");
                         startActivity(intent);
                     }
@@ -150,7 +152,7 @@ public class VerifyPhone extends AppCompatActivity {
                 }
                 else
                 {
-                    Log.w(Model.TAG, "linkWithCredential:failure", task.getException());
+                    Methods.log(Model.TAG, "linkWithCredential:failure" +  task.getException());
                     Toast.makeText(VerifyPhone.this,"Invalid Verification",Toast.LENGTH_SHORT).show();
                 }
             }

@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.yonnyzohar.getmilk.Methods;
 import com.yonnyzohar.getmilk.data.Model;
 import com.yonnyzohar.getmilk.eventDispatcher.EventDispatcher;
 import com.yonnyzohar.getmilk.eventDispatcher.SimpleEvent;
@@ -100,7 +101,7 @@ public class GetPendingAppointmentService extends EventDispatcher {
 
                                 String responderId = child.getKey().toString();
                                 String selectedByMother = child.getValue().toString();
-                                Log.d(Model.TAG, "key " + responderId + " val " + selectedByMother);
+                                Methods.log(Model.TAG, "key " + responderId + " val " + selectedByMother);
                                 if(selectedByMother == "false" || "false".equals(selectedByMother))
                                 {
                                     numUnSelectedResponders++;
@@ -161,7 +162,7 @@ public class GetPendingAppointmentService extends EventDispatcher {
         RequestQueue queue = Volley.newRequestQueue(applicationContext);
 
         String url = Model.reqPrefix + "onCustomerMarkedAppointmentResolved" + str;
-        Log.d(Model.TAG, url);
+        Methods.log(Model.TAG, url);
 
         // Request a string response from the provided URL.
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
@@ -169,13 +170,13 @@ public class GetPendingAppointmentService extends EventDispatcher {
                     @Override
                     public void onResponse(String response) {
                         // Display the first 500 characters of the response string.
-                        Log.d(Model.TAG, response);
+                        Methods.log(Model.TAG, response);
                         dispatchEvent(new SimpleEvent("PENDING_APPOINTMENT_RESOLVED"));
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d(Model.TAG,"That didn't work!");
+                Methods.log(Model.TAG,"That didn't work!");
                 dispatchEvent(new SimpleEvent("PENDING_APPOINTMENT_RESOLVED"));
             }
         });

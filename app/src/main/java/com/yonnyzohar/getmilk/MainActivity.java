@@ -1,6 +1,9 @@
 package com.yonnyzohar.getmilk;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -32,6 +35,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.ParseException;
 import java.util.ArrayList;
 
 
@@ -95,14 +99,14 @@ public class MainActivity extends GameActivity{
 
             Model.mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
-            Log.w(Model.TAG, "User is not currently logged in to firebase");
+            Methods.log(Model.TAG, "User is not currently logged in to firebase");
 
             //sign the user in with google
             createSignInntent();
         }
         else
         {
-            Log.w(Model.TAG, "User Logged in to firebase");
+            Methods.log(Model.TAG, "User Logged in to firebase");
 
             //get uuid and make sure there is an entry for the user
             //create the right intent for the saved user
@@ -158,7 +162,7 @@ public class MainActivity extends GameActivity{
                             // whenever data at this location is updated.
                             if(!dataSnapshot2.exists())
                             {
-                                Log.w(Model.TAG, "FUCK! User is not provider or customer");
+                                Methods.log(Model.TAG, "FUCK! User is not provider or customer");
                                 launchNextScreen(true);
                             }
                             else
@@ -172,7 +176,7 @@ public class MainActivity extends GameActivity{
                         @Override
                         public void onCancelled(DatabaseError error) {
                             // Failed to read value
-                            Log.w(Model.TAG, "Failed to read value.", error.toException());
+                            Methods.log(Model.TAG, "Failed to read value. " +  error.toException());
                         }
                     });
                 }
@@ -187,7 +191,7 @@ public class MainActivity extends GameActivity{
             @Override
             public void onCancelled(DatabaseError error) {
                 // Failed to read value
-                Log.w(Model.TAG, "Failed to read value.", error.toException());
+                Methods.log(Model.TAG, "Failed to read value. " +  error.toException());
             }
         });
     }
@@ -217,24 +221,28 @@ public class MainActivity extends GameActivity{
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             handleSignInResult(task);
         }
+
     }
 
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
+
         try {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
             firebaseAuthWithGoogle(account);
 
         } catch (ApiException e) {
+
+            showAlert(e.getStatusCode() + " " );//+ e.getMessage()
             // The ApiException status code indicates the detailed failure reason.
             // Please refer to the GoogleSignInStatusCodes class reference for more information.
-            Log.w(Model.TAG, "signInResult:failed code=" + e.getStatusCode());
+            Methods.log(Model.TAG, "signInResult:failed code=" + e.getStatusCode());
         }
     }
 
 
 
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
-        Log.d(Model.TAG, "firebaseAuthWithGoogle:" + acct.getId());
+        Methods.log(Model.TAG, "firebaseAuthWithGoogle:" + acct.getId());
 
         AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
         mAuth.signInWithCredential(credential)
@@ -248,7 +256,7 @@ public class MainActivity extends GameActivity{
 
                         } else {
                             // If sign in fails, display a message to the user.
-                            Log.w(Model.TAG, "signInWithCredential:failure", task.getException());
+                            Methods.log(Model.TAG, "signInWithCredential:failure " +  task.getException());
                             Model.mGoogleSignInClient.signOut();
                             FirebaseAuth.getInstance().signOut();
                             createSignInntent();
@@ -259,12 +267,6 @@ public class MainActivity extends GameActivity{
 
                 });
     }
-
-
-
-
-
-
 
 
 
@@ -289,15 +291,30 @@ public class MainActivity extends GameActivity{
                 {
                     this.handler.postDelayed(this, 500);
                     this.i++;
-                    Log.d(Model.TAG, ""+this.i);
+                    Methods.log(Model.TAG, ""+this.i);
                 }
                 else
                 {
-                    Log.d(Model.TAG,  "" + currentFirebaseUser.getUid());
+                    Methods.log(Model.TAG,  "" + currentFirebaseUser.getUid());
                 }
 
             }
         }
         handler.post(new MyRunnable(handler, i));
+    }
+
+    void showAlert(String str)
+    {
+        AlertDialog.Builder builder;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            builder = new AlertDialog.Builder(getApplicationContext(), android.R.style.Theme_Material_Dialog_Alert);
+        } else {
+            builder = new AlertDialog.Builder(getApplicationContext());
+        }
+        builder.setTitle("fuck");
+
+        builder.setMessage(str);
+        builder.setIcon(android.R.drawable.ic_dialog_alert);
+        builder.show();
     }
 }

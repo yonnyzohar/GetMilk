@@ -5,12 +5,15 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import com.google.firebase.FirebaseError;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -79,7 +82,7 @@ public class HomeActivity extends AppCompatActivity {
 
                 @Override
                 public void onClick(View view) {
-                    Log.d(Model.TAG, "CONSTULTANT CLICKED");
+                    Methods.log(Model.TAG, "CONSTULTANT CLICKED");
                     Model.userType = Model.DBRefs.PROVIDERS;
                     showAlert();
 
@@ -146,24 +149,26 @@ public class HomeActivity extends AppCompatActivity {
                 String value = dataSnapshot.getValue(String.class);
                 if(value == null)
                 {
-                    myRef.setValue(true);
+                    myRef.setValue(true,   new DatabaseReference.CompletionListener() {
+                        @Override
+                        public void onComplete(@Nullable DatabaseError databaseError, @NonNull DatabaseReference databaseReference) {
+                            launchNextScreen();
+                        }
+
+                    });
                 }
                 else
                 {
                     //user entry already exists in db
-                    Log.d(Model.TAG, "Value is: " + value);
+                    Methods.log(Model.TAG, "Value is: " + value);
+                    launchNextScreen();
                 }
-
-                launchNextScreen();
-
-
-
             }
 
             @Override
             public void onCancelled(DatabaseError error) {
                 // Failed to read value
-                Log.w(Model.TAG, "Failed to read value.", error.toException());
+                Methods.log(Model.TAG, "Failed to read value."+  error.toException());
             }
         });
 
@@ -215,7 +220,7 @@ public class HomeActivity extends AppCompatActivity {
                  {
                      Set<String> keys = extras.keySet();
                      for (String key : keys) {
-                         Log.d(Model.TAG, "Bundle Contains: key=" + key);
+                         Methods.log(Model.TAG, "Bundle Contains: key=" + key);
                      }
                  }
 

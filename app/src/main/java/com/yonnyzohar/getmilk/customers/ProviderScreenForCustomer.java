@@ -23,16 +23,8 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 
-import java.util.Arrays;
 
-import com.facebook.AccessToken;
-import com.facebook.CallbackManager;
-import com.facebook.FacebookCallback;
-import com.facebook.FacebookException;
-import com.facebook.GraphRequest;
-import com.facebook.GraphResponse;
-import com.facebook.login.LoginResult;
-import com.facebook.login.widget.LoginButton;
+import com.yonnyzohar.getmilk.Methods;
 import com.yonnyzohar.getmilk.data.Model;
 import com.yonnyzohar.getmilk.R;
 import com.yonnyzohar.getmilk.data.ReviewerData;
@@ -55,8 +47,8 @@ public class ProviderScreenForCustomer extends AppCompatActivity {
     public String providerId;
 
 
-    LoginButton loginButton;
-    CallbackManager callbackManager;
+    //LoginButton loginButton;
+    //CallbackManager callbackManager;
     ProviderReviewsService providerReviewsService;
     Button orderConsultantBTN;
 
@@ -77,7 +69,7 @@ public class ProviderScreenForCustomer extends AppCompatActivity {
 
         providerReviewsView = findViewById(R.id.provider_reviews);
         listItemController = new ProviderScreenForCustomer.ListItemController();
-        callbackManager = CallbackManager.Factory.create();
+        //callbackManager = CallbackManager.Factory.create();
 
         Bundle extras = getIntent().getExtras();
         if (extras != null)
@@ -137,17 +129,17 @@ public class ProviderScreenForCustomer extends AppCompatActivity {
                 }
             });
 
-            AccessToken accessToken = AccessToken.getCurrentAccessToken();
-            boolean isLoggedIn = accessToken != null && !accessToken.isExpired();
+            //AccessToken accessToken = AccessToken.getCurrentAccessToken();
+            //boolean isLoggedIn = accessToken != null && !accessToken.isExpired();
 
-            if(isLoggedIn == false)
+            /*if(isLoggedIn == false)
             {
                 showFBLoginButton();
             }
             else
             {
                 fetchFriends( accessToken);
-            }
+            }*/
 
             providerReviewsService = new ProviderReviewsService(getApplicationContext());
             providerReviewsService.getReviews(providerId);
@@ -187,17 +179,18 @@ public class ProviderScreenForCustomer extends AppCompatActivity {
                     }
                 });
 
-                orderConsultantBTN = findViewById(R.id.order_consultant_btn);
-                orderConsultantBTN.setOnClickListener(new View.OnClickListener(){
-                    @Override
-                    public void onClick(View view) {
-                        orderConsultantBTN.setOnClickListener(null);
-                        onProviderSelected(providerId, Model.userData.uid);
-                        return;
-                    }
-                });
+
 
             }
+            orderConsultantBTN = findViewById(R.id.order_consultant_btn);
+            orderConsultantBTN.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View view) {
+                    orderConsultantBTN.setOnClickListener(null);
+                    onProviderSelected(providerId, Model.userData.uid);
+                    return;
+                }
+            });
         }
     };
 
@@ -209,7 +202,7 @@ public class ProviderScreenForCustomer extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
                         // Display the first 500 characters of the response string.
-                        Log.d(Model.TAG, response);
+                        Methods.log(Model.TAG, response);
 
                         String str = getResources().getString(R.string.notifying_provider_of_your_interest);
                         Toast.makeText(getApplicationContext(), str, Toast.LENGTH_SHORT).show();
@@ -222,7 +215,7 @@ public class ProviderScreenForCustomer extends AppCompatActivity {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d(Model.TAG,"That didn't work!");
+                Methods.log(Model.TAG,"That didn't work!");
             }
         });
 
@@ -277,7 +270,7 @@ public class ProviderScreenForCustomer extends AppCompatActivity {
         }
     }
 
-    private void fetchFriends(AccessToken accessToken) {
+    /*private void fetchFriends(AccessToken accessToken) {
         String userId = accessToken.getUserId();
 
         //this request only returns facebook friends who have INSTALLED GETMILK.
@@ -303,11 +296,11 @@ public class ProviderScreenForCustomer extends AppCompatActivity {
                                     String name = data.getJSONObject(i).getString("name");
                                     //ListOfFriendsIDS.add(id);
                                     //ListOfFriendsNames.add(name);
-                                    Log.d(Model.TAG, name + " " + id);
+                                    Methods.log(Model.TAG, name + " " + id);
                                 }
                             }
                         } catch (JSONException e) {
-                            Log.d(Model.TAG, "FUCK");
+                            Methods.log(Model.TAG, "FUCK");
                         }
                     }
                 });
@@ -355,6 +348,6 @@ public class ProviderScreenForCustomer extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         callbackManager.onActivityResult(requestCode, resultCode, data);
         super.onActivityResult(requestCode, resultCode, data);
-    }
+    }*/
 
 }

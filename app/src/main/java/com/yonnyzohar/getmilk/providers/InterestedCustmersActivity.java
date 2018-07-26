@@ -21,6 +21,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.yonnyzohar.getmilk.Methods;
 import com.yonnyzohar.getmilk.services.GetProviderService;
 import com.yonnyzohar.getmilk.data.Model;
 import com.yonnyzohar.getmilk.R;
@@ -233,12 +234,12 @@ public class InterestedCustmersActivity extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Log.d(Model.TAG, response);
+                        Methods.log(Model.TAG, response);
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d(Model.TAG,"That didn't work!");
+                Methods.log(Model.TAG,"That didn't work!");
             }
         });
 

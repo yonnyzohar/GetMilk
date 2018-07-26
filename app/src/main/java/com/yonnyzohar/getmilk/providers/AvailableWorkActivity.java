@@ -23,6 +23,7 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.yonnyzohar.getmilk.Methods;
 import com.yonnyzohar.getmilk.data.Model;
 import com.yonnyzohar.getmilk.R;
 import com.yonnyzohar.getmilk.eventDispatcher.Event;
@@ -171,7 +172,7 @@ public class AvailableWorkActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
                         // Display the first 500 characters of the response string.
-                        Log.d(Model.TAG, response);
+                        Methods.log(Model.TAG, response);
 
                         String str = getResources().getString(R.string.notifying_mother_of_your_interest);
                         Toast.makeText(getApplicationContext(), str, Toast.LENGTH_SHORT).show();
@@ -181,7 +182,7 @@ public class AvailableWorkActivity extends AppCompatActivity {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d(Model.TAG,"That didn't work!");
+                Methods.log(Model.TAG,"That didn't work!");
             }
         });
 

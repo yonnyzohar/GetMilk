@@ -5,6 +5,7 @@ import android.util.Log;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
+import com.yonnyzohar.getmilk.Methods;
 import com.yonnyzohar.getmilk.data.Model;
 
 public class NotificationManager extends FirebaseMessagingService {
@@ -14,7 +15,7 @@ public class NotificationManager extends FirebaseMessagingService {
     @Override
     public void onNewToken(String s) {
         super.onNewToken(s);
-        Log.e("NEW_TOKEN",s);
+        Methods.log("NEW_TOKEN",s);
         Model.fireBaseMessagingToken = s;
     }
 
@@ -40,16 +41,16 @@ public class NotificationManager extends FirebaseMessagingService {
             notificationTitle = remoteMessage.getNotification().getTitle();
             notificationBody = remoteMessage.getNotification().getBody();
         }catch (NullPointerException e){
-            Log.e(Model.TAG, "onMessageReceived: NullPointerException: " + e.getMessage() );
+            Methods.log(Model.TAG, "onMessageReceived: NullPointerException: " + e.getMessage() );
         }
-        Log.d(Model.TAG, "onMessageReceived: data: " + notificationData);
-        Log.d(Model.TAG, "onMessageReceived: notification body: " + notificationBody);
-        Log.d(Model.TAG, "onMessageReceived: notification title: " + notificationTitle);
+        Methods.log(Model.TAG, "onMessageReceived: data: " + notificationData);
+        Methods.log(Model.TAG, "onMessageReceived: notification body: " + notificationBody);
+        Methods.log(Model.TAG, "onMessageReceived: notification title: " + notificationTitle);
 
 
         /*String dataType = remoteMessage.getData().get(getString(R.string.data_type));
         if(dataType.equals(getString(R.string.direct_message))){
-            Log.d(Model.TAG, "onMessageReceived: new incoming message.");
+            Methods.log(Model.TAG, "onMessageReceived: new incoming message.");
             String title = remoteMessage.getData().get(getString(R.string.data_title));
             String message = remoteMessage.getData().get(getString(R.string.data_message));
             String messageId = remoteMessage.getData().get(getString(R.string.data_message_id));
@@ -63,7 +64,7 @@ public class NotificationManager extends FirebaseMessagingService {
      * @param message
      *//*
     private void sendMessageNotification(String title, String message, String messageId){
-        Log.d(Model.TAG, "sendChatmessageNotification: building a chatmessage notification");
+        Methods.log(Model.TAG, "sendChatmessageNotification: building a chatmessage notification");
 
         //get the notification id
         int notificationId = buildNotificationId(messageId);
@@ -106,14 +107,14 @@ public class NotificationManager extends FirebaseMessagingService {
 
 
     private int buildNotificationId(String id){
-        Log.d(Model.TAG, "buildNotificationId: building a notification id.");
+        Methods.log(Model.TAG, "buildNotificationId: building a notification id.");
 
         int notificationId = 0;
         for(int i = 0; i < 9; i++){
             notificationId = notificationId + id.charAt(0);
         }
-        Log.d(Model.TAG, "buildNotificationId: id: " + id);
-        Log.d(Model.TAG, "buildNotificationId: notification id:" + notificationId);
+        Methods.log(Model.TAG, "buildNotificationId: id: " + id);
+        Methods.log(Model.TAG, "buildNotificationId: notification id:" + notificationId);
         return notificationId;
     }*/
 

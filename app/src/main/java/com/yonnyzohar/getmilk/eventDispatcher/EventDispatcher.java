@@ -5,6 +5,8 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 import android.util.Log;
 
+import com.yonnyzohar.getmilk.Methods;
+
 
 public class EventDispatcher implements Dispatcher {
 
@@ -57,7 +59,7 @@ public class EventDispatcher implements Dispatcher {
     @Override
     public void dispatchEvent(Event event) {
         if (event == null) {
-            Log.e(TAG, "can not dispatch null event");
+            Methods.log(TAG, "can not dispatch null event");
             return;
         }
         String type = event.getType();

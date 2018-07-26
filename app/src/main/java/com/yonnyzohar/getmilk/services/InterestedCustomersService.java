@@ -9,6 +9,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.yonnyzohar.getmilk.Methods;
 import com.yonnyzohar.getmilk.data.Model;
 import com.yonnyzohar.getmilk.eventDispatcher.EventDispatcher;
 import com.yonnyzohar.getmilk.eventDispatcher.SimpleEvent;
@@ -38,7 +39,7 @@ public class InterestedCustomersService extends EventDispatcher{
         RequestQueue queue = Volley.newRequestQueue(applicationContext);
 
         String url = Model.reqPrefix + "getInterestedCustomers?providerId=" +Model.userData.uid;
-        Log.d(Model.TAG, url);
+        Methods.log(Model.TAG, url);
 
         // Request a string response from the provided URL.
          StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
@@ -46,13 +47,13 @@ public class InterestedCustomersService extends EventDispatcher{
                 @Override
                 public void onResponse(String response) {
                     // Display the first 500 characters of the response string.
-                    Log.d(Model.TAG, response);
+                    Methods.log(Model.TAG, response);
                     parseResponse(response);
                 }
             }, new Response.ErrorListener() {
         @Override
         public void onErrorResponse(VolleyError error) {
-            Log.d(Model.TAG,"That didn't work!");
+            Methods.log(Model.TAG,"That didn't work!");
         }
     });
 

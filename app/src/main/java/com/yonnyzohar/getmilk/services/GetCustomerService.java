@@ -55,6 +55,7 @@ public class GetCustomerService  extends EventDispatcher {
     public void getCustomerData(String customerId)
     {
         dataObj.uid = customerId;
+        dataObj.historyArr = new ArrayList<HistoryData>();
         customerNode = database.getReference("data").child(Model.DBRefs.CUSTOMERS).child(customerId);
         fireBaseMessagingTokenNode = customerNode.child("fireBaseMessagingToken");
         historyNode = customerNode.child("appointmentsHistory");
@@ -78,7 +79,7 @@ public class GetCustomerService  extends EventDispatcher {
                         DataSnapshot appointmentsHistory = dataSnapshot.child("appointmentsHistory");
                         if(appointmentsHistory.exists())
                         {
-                            dataObj.historyArr = new ArrayList<HistoryData>();
+
 
                             for(DataSnapshot child : appointmentsHistory.getChildren() ) {
 

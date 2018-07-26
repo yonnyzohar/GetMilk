@@ -424,7 +424,6 @@ public class CustomerMain extends GameActivity {
     private void deleteAppointment() {
         pendingAppointmentService.deletePendingAppointment();
         orderConsultantBTN.setText( getResources().getString(R.string.order_consultation) );
-        //goToAppointmentScreen();
     }
 
 }
