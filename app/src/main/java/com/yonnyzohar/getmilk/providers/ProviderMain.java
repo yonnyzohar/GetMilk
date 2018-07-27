@@ -11,6 +11,8 @@ import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import com.android.billingclient.api.BillingClient;
+import com.android.billingclient.api.BillingClientStateListener;
 import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -50,6 +52,8 @@ public class ProviderMain extends GameActivity {
     InterestedCustomersService interestedCustomersService;
 
     int[] starsArr;
+
+
 
 
     /*
@@ -126,6 +130,9 @@ public class ProviderMain extends GameActivity {
         reqNotifications.setVisibility(View.INVISIBLE);
         starsArr = new int[]{R.id.star_1, R.id.star_2, R.id.star_3, R.id.star_4, R.id.star_5};
         showButtons();
+
+
+
 
     }
 

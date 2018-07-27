@@ -9,7 +9,6 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -27,6 +26,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.yonnyzohar.getmilk.billing.BillingManager;
 import com.yonnyzohar.getmilk.data.Model;
 
 import org.json.JSONArray;
@@ -35,8 +35,8 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.text.ParseException;
 import java.util.ArrayList;
+import com.yonnyzohar.getmilk.billing.MyBillingUpdateListener;
 
 
 //buy this:
@@ -44,6 +44,7 @@ import java.util.ArrayList;
 //android:background="@drawable/baby_face_24dp"
 //http://www.londatiga.net/it/how-to-create-custom-window-title-in-android/ - for custom activity header( heb text align)
 //http://blog.supenta.com/2014/07/02/how-to-style-alertdialogs-like-a-pro/ custom dialougs
+//http://www.androidrey.com/implement-play-billing-library-in-android-application/
 public class MainActivity extends GameActivity{
 
 
@@ -53,6 +54,8 @@ public class MainActivity extends GameActivity{
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener firebaseAuthstateListener;
     private FirebaseUser currUser;
+
+    private BillingManager billingManager;
 
 
 
@@ -83,6 +86,17 @@ public class MainActivity extends GameActivity{
 
         }
 
+
+        billingManager = new BillingManager(MainActivity.this, new MyBillingUpdateListener());
+        //billingManager.initiatePurchaseFlow("1b", null, BillingClient.SkuType.INAPP);
+        //billingManager.consumeAsync(“token”);
+       // proceedToApp();
+
+
+
+    }
+
+    private void proceedToApp() {
         // [START initialize_auth]
         mAuth = FirebaseAuth.getInstance();
         currUser = mAuth.getCurrentUser();
@@ -113,7 +127,6 @@ public class MainActivity extends GameActivity{
             //if user is neither a customer or a provider- let him choose
             findOutIfUserIsConsultantOrCustomer();
         }
-
     }
 
     private String loadJSONFromAsset() {

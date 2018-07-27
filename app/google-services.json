@@ -15,19 +15,19 @@
       },
       "oauth_client": [
         {
-          "client_id": "663746177293-drpmbo3it5pk456qa9cgv25crrsvn4h4.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.yonnyzohar.getmilk",
-            "certificate_hash": "65d1ad886b6fd798c16991cb99930bc74b53dc22"
-          }
-        },
-        {
           "client_id": "663746177293-ocfroebaahacvbeomfpmlup1mdh44uca.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.yonnyzohar.getmilk",
             "certificate_hash": "505251ab26bf9d1e870fe19d07b50af69bbcd207"
+          }
+        },
+        {
+          "client_id": "663746177293-kv64jcsa3k98m9h6c762ib1md08t4a4d.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.yonnyzohar.getmilk",
+            "certificate_hash": "cb5781d4ab375fb08a087819a8049ec9d077536f"
           }
         },
         {
@@ -48,7 +48,7 @@
           "status": 2,
           "other_platform_oauth_client": [
             {
-              "client_id": "663746177293-d871r2s7mje7vd77034v6ig3up930t71.apps.googleusercontent.com",
+              "client_id": "663746177293-s7fdkifapnmir4m1hfhkpkg8v0ftsl53.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
