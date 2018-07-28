@@ -124,7 +124,6 @@ public class ProviderMain extends GameActivity {
         availableWorkBTN        = findViewById(R.id.consultations_request_btn);
 
 
-
         availabilityToggleBTN   = findViewById(R.id.switch_ent);
         interestedMothersNotifications.setVisibility(View.INVISIBLE);
         reqNotifications.setVisibility(View.INVISIBLE);

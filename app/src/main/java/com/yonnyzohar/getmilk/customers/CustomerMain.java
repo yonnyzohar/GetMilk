@@ -74,6 +74,7 @@ public class CustomerMain extends GameActivity {
         }
         orderConsultantBTN = findViewById(R.id.order_consultant_btn);
         respondingConsultantsTXT = findViewById(R.id.respondingConsultantsTXT);
+        respondingConsultantsTXT.setVisibility(View.INVISIBLE);
 
 
         respondingConsultantsBTN        = findViewById(R.id.available_consultants_btn);
@@ -242,45 +243,17 @@ public class CustomerMain extends GameActivity {
     private EventListener onAppointmentResolved = new EventListener() {
         @Override
         public void onEvent(Event event) {
-            getProviderService.removeListener("PENDING_APPOINTMENT_RESOLVED", onAppointmentResolved);
-
-           // if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_CALENDAR) == PackageManager.PERMISSION_GRANTED) {
-                if (appointmentData != null) {
-                    AlertDialog.Builder builder;
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                        builder = new AlertDialog.Builder(getApplicationContext(), android.R.style.Theme_Material_Dialog_Alert);
-                    } else {
-                        builder = new AlertDialog.Builder(getApplicationContext());
-                    }
-                    builder.setTitle(R.string.add_to_calendar);
-
-                    String str = "האם תרצי להוסיף את הפגישה ליומן הטלפון?";
+            pendingAppointmentService.removeListener("PENDING_APPOINTMENT_RESOLVED", onAppointmentResolved);
 
 
-                    builder.setMessage(str);
 
-                    builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            try {
-                                addEventToCalendar();
-                            } catch (ParseException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    });
-                    builder.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            // do nothing
-                        }
-                    });
-                    builder.setIcon(android.R.drawable.ic_dialog_alert);
-                    builder.show();
-                }
+            try {
+                addEventToCalendar();
+            } catch (ParseException e) {
+                e.printStackTrace();
             }
-        //}
 
-
-
+        }
     };
 
     private void addEventToCalendar() throws ParseException {

@@ -79,7 +79,11 @@ public class ProviderRegistration extends GameActivity
                         String amount = priceTXT.getText().toString();
                         startListeningForPrice = false;
                         int myNum = Integer.parseInt(amount);
-                        setPrice(myNum);
+                        if(myNum != 0)
+                        {
+                            setPrice(myNum);
+                        }
+
                     }
                 }
                 else
@@ -239,7 +243,11 @@ public class ProviderRegistration extends GameActivity
                 displayNameTXT.setText(dataObj.name);
             }
 
-            priceTXT.setText(Integer.toString(dataObj.price));
+            if(dataObj.price != 0)
+            {
+                priceTXT.setText(Integer.toString(dataObj.price));
+            }
+
 
             if(dataObj.isIbclc == null)
             {

@@ -1,7 +1,6 @@
 package com.yonnyzohar.getmilk;
 
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -36,7 +35,9 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import com.yonnyzohar.getmilk.billing.MyBillingUpdateListener;
+
+import com.yonnyzohar.getmilk.eventDispatcher.Event;
+import com.yonnyzohar.getmilk.eventDispatcher.EventListener;
 
 
 //buy this:
@@ -87,14 +88,39 @@ public class MainActivity extends GameActivity{
         }
 
 
-        billingManager = new BillingManager(MainActivity.this, new MyBillingUpdateListener());
-        //billingManager.initiatePurchaseFlow("1b", null, BillingClient.SkuType.INAPP);
+
+
+        billingManager = BillingManager.getInstance();
+        billingManager.addListener("BILLING_CLIENT_SETUP_FINISHED", onBillingSetupFinished);
+        billingManager.init(MainActivity.this);
+
+        //billingManager.initiatePurchaseFlow("call_fee");
         //billingManager.consumeAsync(“token”);
-       // proceedToApp();
 
 
 
     }
+
+    private EventListener onBillingSetupFinished = new EventListener() {
+        @Override
+        public void onEvent(Event event) {
+            billingManager.removeListener("BILLING_CLIENT_SETUP_FINISHED", onBillingSetupFinished);
+            billingManager.addListener("PURCHASES_UPDATED", onPurchasesUpdated);
+            billingManager.queryPurchases();
+
+
+        }
+    };
+
+    private EventListener onPurchasesUpdated = new EventListener() {
+        @Override
+        public void onEvent(Event event) {
+            billingManager.removeListener("PURCHASES_UPDATED", onPurchasesUpdated);
+
+            proceedToApp();
+
+        }
+    };
 
     private void proceedToApp() {
         // [START initialize_auth]
