@@ -23,6 +23,7 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.yonnyzohar.getmilk.GameActivity;
 import com.yonnyzohar.getmilk.Methods;
 import com.yonnyzohar.getmilk.data.Model;
 import com.yonnyzohar.getmilk.R;
@@ -30,7 +31,7 @@ import com.yonnyzohar.getmilk.eventDispatcher.Event;
 import com.yonnyzohar.getmilk.eventDispatcher.EventListener;
 import com.yonnyzohar.getmilk.services.GetAvaliableWorkService;
 
-public class AvailableWorkActivity extends AppCompatActivity {
+public class AvailableWorkActivity extends GameActivity {
 
 
 

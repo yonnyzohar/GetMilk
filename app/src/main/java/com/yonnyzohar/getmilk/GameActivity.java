@@ -1,5 +1,7 @@
 package com.yonnyzohar.getmilk;
 
+import android.content.pm.ActivityInfo;
+import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -12,6 +14,12 @@ import com.yonnyzohar.getmilk.data.Model;
  */
 
 public class GameActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+    }
 
 
     public void getMessagingToken()

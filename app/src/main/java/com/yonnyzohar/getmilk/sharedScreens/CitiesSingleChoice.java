@@ -17,10 +17,11 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.yonnyzohar.getmilk.GameActivity;
 import com.yonnyzohar.getmilk.data.Model;
 import com.yonnyzohar.getmilk.R;
 
-public class CitiesSingleChoice extends AppCompatActivity {
+public class CitiesSingleChoice extends GameActivity {
 
     EditText chooseLocTXT;
     List<String> currCities ;

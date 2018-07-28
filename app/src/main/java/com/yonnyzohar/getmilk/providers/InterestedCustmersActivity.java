@@ -21,6 +21,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.yonnyzohar.getmilk.GameActivity;
 import com.yonnyzohar.getmilk.Methods;
 import com.yonnyzohar.getmilk.services.GetProviderService;
 import com.yonnyzohar.getmilk.data.Model;
@@ -33,7 +34,7 @@ import com.yonnyzohar.getmilk.services.InterestedCustomersService;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class InterestedCustmersActivity extends AppCompatActivity {
+public class InterestedCustmersActivity extends GameActivity {
 
     InterestedCustomersService interestedCustomersService;
     ListView avaliableListView;

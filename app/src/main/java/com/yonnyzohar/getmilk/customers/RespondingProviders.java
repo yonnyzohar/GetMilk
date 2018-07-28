@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
+import com.yonnyzohar.getmilk.GameActivity;
 import com.yonnyzohar.getmilk.data.Model;
 import com.yonnyzohar.getmilk.services.GetPendingAppointmentService;
 import com.yonnyzohar.getmilk.services.GetProviderService;
@@ -22,7 +23,7 @@ import com.yonnyzohar.getmilk.eventDispatcher.Event;
 import com.yonnyzohar.getmilk.eventDispatcher.EventListener;
 
 
-public class RespondingProviders extends AppCompatActivity {
+public class RespondingProviders extends GameActivity {
 
     GetPendingAppointmentService pendingAppointmentService;
 

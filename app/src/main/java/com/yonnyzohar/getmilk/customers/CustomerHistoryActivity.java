@@ -25,6 +25,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
+import com.yonnyzohar.getmilk.GameActivity;
 import com.yonnyzohar.getmilk.R;
 import com.yonnyzohar.getmilk.data.HistoryData;
 import com.yonnyzohar.getmilk.data.Model;
@@ -38,7 +39,7 @@ import com.yonnyzohar.getmilk.services.InterestedCustomersService;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class CustomerHistoryActivity extends AppCompatActivity {
+public class CustomerHistoryActivity extends GameActivity {
 
     ListView avaliableListView;
     CustomerHistoryActivity.ListItemController listItemController;

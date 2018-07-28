@@ -29,7 +29,7 @@ import com.yonnyzohar.getmilk.data.Model;
 import com.yonnyzohar.getmilk.providers.ProviderMain;
 import com.yonnyzohar.getmilk.sharedScreens.VerifyPhone;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends GameActivity {
 
     private Button consultantBTN;
     private Button customerBTN;

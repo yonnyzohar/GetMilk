@@ -25,6 +25,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.yonnyzohar.getmilk.GameActivity;
 import com.yonnyzohar.getmilk.R;
 import com.yonnyzohar.getmilk.data.ContactData;
 import com.yonnyzohar.getmilk.data.Model;
@@ -38,7 +39,7 @@ import org.json.JSONObject;
 
 import java.util.Calendar;
 
-public class ContactsActivity extends AppCompatActivity {
+public class ContactsActivity extends GameActivity {
 
     TextView noListings;
 

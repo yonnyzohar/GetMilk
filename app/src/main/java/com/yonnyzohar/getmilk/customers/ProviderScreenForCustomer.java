@@ -24,6 +24,7 @@ import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 
 
+import com.yonnyzohar.getmilk.GameActivity;
 import com.yonnyzohar.getmilk.Methods;
 import com.yonnyzohar.getmilk.data.Model;
 import com.yonnyzohar.getmilk.R;
@@ -37,7 +38,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class ProviderScreenForCustomer extends AppCompatActivity {
+public class ProviderScreenForCustomer extends GameActivity {
 
     public String aboutMe;
     public String name;

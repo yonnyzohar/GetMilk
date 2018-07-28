@@ -23,6 +23,7 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
 
+import com.yonnyzohar.getmilk.GameActivity;
 import com.yonnyzohar.getmilk.Methods;
 import com.yonnyzohar.getmilk.customers.CustomerMain;
 import com.yonnyzohar.getmilk.data.Model;
@@ -30,7 +31,7 @@ import com.yonnyzohar.getmilk.R;
 import com.yonnyzohar.getmilk.customers.OrderConsultant;
 import com.yonnyzohar.getmilk.providers.ProviderMain;
 
-public class VerifyPhone extends AppCompatActivity {
+public class VerifyPhone extends GameActivity {
 
     private boolean mVerificationInProgress = false;
     private String mVerificationId;

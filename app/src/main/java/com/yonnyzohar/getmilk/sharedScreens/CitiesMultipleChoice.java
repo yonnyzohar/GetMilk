@@ -27,11 +27,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.yonnyzohar.getmilk.GameActivity;
 import com.yonnyzohar.getmilk.Methods;
 import com.yonnyzohar.getmilk.data.Model;
 import com.yonnyzohar.getmilk.R;
 
-public class CitiesMultipleChoice extends AppCompatActivity {
+public class CitiesMultipleChoice extends GameActivity {
 
     DatabaseReference citiesNode;
     FirebaseDatabase database;
